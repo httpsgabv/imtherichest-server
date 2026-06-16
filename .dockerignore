@@ -1,0 +1,11 @@
+node_modules
+dist
+coverage
+.git
+.github
+.husky
+.env
+.env.*
+.DS_Store
+npm-debug.log
+pnpm-debug.log
