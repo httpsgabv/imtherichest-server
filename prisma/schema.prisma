@@ -23,9 +23,31 @@ model User {
   updatedAt     DateTime  @updatedAt
   sessions      Session[]
   accounts      Account[]
+  profile       Profile?
 
   @@unique([email])
   @@map("user")
+}
+
+model Profile {
+  id          String   @id @default(cuid())
+  userId      String   @unique
+  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  username    String   @unique
+  displayName String
+  bio         String   @default("")
+  country     String   @default("")
+  avatarUrl   String?
+
+  points    Int @default(0)
+  totalPaid Int @default(0)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([points(sort: Desc)])
+  @@map("profile")
 }
 
 model Session {

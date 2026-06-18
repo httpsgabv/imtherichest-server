@@ -63,7 +63,7 @@ export class SignUpWithEmailController {
     @Res({ passthrough: true }) response: Response,
   ) {
     const result = await this.signUpWithEmailUseCase.execute({
-      name: body.name,
+      username: body.username,
       email: body.email,
       password: body.password,
     });

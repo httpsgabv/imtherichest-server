@@ -17,14 +17,14 @@ const signUpEmailMock = vi.mocked(auth.api.signUpEmail);
 
 const apiUser = {
   id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
-  name: 'John Doe',
+  name: 'john_doe',
   email: 'john@example.com',
   emailVerified: true,
   createdAt: new Date('2026-01-01T00:00:00.000Z'),
 };
 
 const defaultParams = {
-  name: apiUser.name,
+  username: 'john_doe',
   email: apiUser.email,
   password: '12345678',
 };

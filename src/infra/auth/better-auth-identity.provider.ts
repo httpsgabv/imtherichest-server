@@ -34,7 +34,7 @@ export class BetterAuthIdentityProvider implements AuthIdentityProvider {
       const { headers, response } = await auth.api.signUpEmail({
         returnHeaders: true,
         body: {
-          name: params.name,
+          name: params.username,
           email: params.email,
           password: params.password,
         },

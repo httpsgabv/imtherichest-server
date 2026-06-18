@@ -7,9 +7,10 @@ import { createNestApp } from '../../../../test/create-nest-app.js';
 async function signUpAndGetCookies(
   server: Server,
   email: string,
+  username: string,
 ): Promise<string[]> {
   const res = await request(server).post('/api/v1/auth/sign-up/email').send({
-    name: 'Delete User',
+    username,
     email,
     password: '12345678',
   });

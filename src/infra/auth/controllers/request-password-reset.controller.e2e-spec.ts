@@ -18,7 +18,7 @@ describe('RequestPasswordReset (E2E)', () => {
 
   it('[POST] /api/v1/auth/request-password-reset → 200 with success for a registered email', async () => {
     await request(server).post('/api/v1/auth/sign-up/email').send({
-      name: 'Reset User',
+      username: 'reset_user',
       email: 'reset-registered@example.com',
       password: '12345678',
     });

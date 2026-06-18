@@ -2,11 +2,16 @@ import { createZodDto } from 'nestjs-zod';
 import z from 'zod';
 
 export const SignUpWithEmailBodySchema = z.object({
-  name: z
+  username: z
     .string()
     .trim()
-    .min(1, 'Name is required')
-    .max(80, 'Name must have at most 80 characters.'),
+    .toLowerCase()
+    .min(2, 'Username must be at least 2 characters.')
+    .max(30, 'Username must be at most 30 characters.')
+    .regex(
+      /^[a-z0-9_-]+$/,
+      'Username may only contain lowercase letters, numbers, hyphens, and underscores.',
+    ),
 
   email: z.email('Email is invalid.').trim().toLowerCase(),
 

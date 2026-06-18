@@ -15,6 +15,7 @@ import { SignOutController } from './controllers/sign-out.controller.js';
 import { RequestPasswordResetController } from './controllers/request-password-reset.controller.js';
 import { UpdatePasswordController } from './controllers/update-password.controller.js';
 import { AuthIdentityProvider } from '#domain/auth/ports/auth-identity.provider.js';
+import { UsersModule } from '#infra/users/users.module.js';
 
 @Module({
   imports: [
@@ -30,6 +31,7 @@ import { AuthIdentityProvider } from '#domain/auth/ports/auth-identity.provider.
         },
       },
     }),
+    UsersModule,
   ],
   controllers: [
     SignUpWithEmailController,

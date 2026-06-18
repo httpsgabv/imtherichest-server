@@ -1,25 +1,35 @@
 import { failure, success } from '#core/utils/either.js';
 import { AuthProviderError } from '#domain/auth/errors/auth-provider.error.js';
 import { EmailAlreadyInUserError } from '#domain/auth/errors/email-already-in-use.error.js';
+import { UsernameAlreadyTakenError } from '#domain/users/errors/username-already-taken.error.js';
 import { FakeAuthIdentityProvider } from '#test/auth/fake-auth-identity-provider.js';
+import { makeProfile } from '#test/factories/make-profile.js';
 import { makeUser } from '#test/factories/make-user.js';
+import { InMemoryProfilesRepository } from '#test/users/in-memory-profiles-repository.js';
+import { CreateProfileUseCase } from '#domain/users/use-cases/create-profile.use-case.js';
 import { SignUpWithEmailUseCase } from './sign-up-with-email.use-case.js';
+
+const DEFAULT_PARAMS = {
+  username: 'john_doe',
+  email: 'john@example.com',
+  password: '12345678',
+};
 
 describe('SignUpWithEmailUseCase', () => {
   let fakeProvider: FakeAuthIdentityProvider;
+  let profilesRepository: InMemoryProfilesRepository;
+  let createProfileUseCase: CreateProfileUseCase;
   let sut: SignUpWithEmailUseCase;
 
   beforeEach(() => {
     fakeProvider = new FakeAuthIdentityProvider();
-    sut = new SignUpWithEmailUseCase(fakeProvider);
+    profilesRepository = new InMemoryProfilesRepository();
+    createProfileUseCase = new CreateProfileUseCase(profilesRepository);
+    sut = new SignUpWithEmailUseCase(fakeProvider, createProfileUseCase);
   });
 
   it('should return success with user and cookie headers when provider succeeds', async () => {
-    const result = await sut.execute({
-      name: 'John Doe',
-      email: 'john@example.com',
-      password: '12345678',
-    });
+    const result = await sut.execute(DEFAULT_PARAMS);
 
     expect(result.isSuccess()).toBe(true);
     expect(result.value).toMatchObject({
@@ -28,26 +38,28 @@ describe('SignUpWithEmailUseCase', () => {
     });
   });
 
+  it('should create a profile after successful sign-up', async () => {
+    await sut.execute(DEFAULT_PARAMS);
+
+    expect(profilesRepository.items).toHaveLength(1);
+    expect(profilesRepository.items[0].username).toBe('john_doe');
+    expect(profilesRepository.items[0].displayName).toBe('john_doe');
+  });
+
   it('should forward the correct params to the identity provider', async () => {
-    const params = {
-      name: 'John Doe',
+    await sut.execute(DEFAULT_PARAMS);
+
+    expect(fakeProvider.lastReceivedParams).toMatchObject({
       email: 'john@example.com',
       password: '12345678',
-    };
-
-    await sut.execute(params);
-
-    expect(fakeProvider.lastReceivedParams).toEqual(params);
+      username: 'john_doe',
+    });
   });
 
   it('should return failure with EmailAlreadyInUserError when email is already in use', async () => {
     fakeProvider.simulateEmailAlreadyInUse('john@example.com');
 
-    const result = await sut.execute({
-      name: 'John Doe',
-      email: 'john@example.com',
-      password: '12345678',
-    });
+    const result = await sut.execute(DEFAULT_PARAMS);
 
     expect(result.isFailure()).toBe(true);
     expect(result.value).toBeInstanceOf(EmailAlreadyInUserError);
@@ -56,14 +68,18 @@ describe('SignUpWithEmailUseCase', () => {
     );
   });
 
+  it('should not create a profile when the provider returns an error', async () => {
+    fakeProvider.simulateProviderError('Upstream service unavailable.');
+
+    await sut.execute(DEFAULT_PARAMS);
+
+    expect(profilesRepository.items).toHaveLength(0);
+  });
+
   it('should return failure with AuthProviderError when provider returns an error', async () => {
     fakeProvider.simulateProviderError('Upstream service unavailable.');
 
-    const result = await sut.execute({
-      name: 'John Doe',
-      email: 'john@example.com',
-      password: '12345678',
-    });
+    const result = await sut.execute(DEFAULT_PARAMS);
 
     expect(result.isFailure()).toBe(true);
     expect(result.value).toBeInstanceOf(AuthProviderError);
@@ -72,15 +88,20 @@ describe('SignUpWithEmailUseCase', () => {
     );
   });
 
+  it('should return failure with UsernameAlreadyTakenError when username is taken', async () => {
+    profilesRepository.items.push(makeProfile({ username: 'john_doe' }));
+
+    const result = await sut.execute(DEFAULT_PARAMS);
+
+    expect(result.isFailure()).toBe(true);
+    expect(result.value).toBeInstanceOf(UsernameAlreadyTakenError);
+  });
+
   it('should propagate the exact error instance without re-wrapping', async () => {
     const error = new EmailAlreadyInUserError('john@example.com');
     fakeProvider.simulateResult(failure(error));
 
-    const result = await sut.execute({
-      name: 'John Doe',
-      email: 'john@example.com',
-      password: '12345678',
-    });
+    const result = await sut.execute(DEFAULT_PARAMS);
 
     expect(result.value).toBe(error);
   });
@@ -95,7 +116,7 @@ describe('SignUpWithEmailUseCase', () => {
     );
 
     const result = await sut.execute({
-      name: user.name,
+      username: 'some_user',
       email: user.email,
       password: '12345678',
     });

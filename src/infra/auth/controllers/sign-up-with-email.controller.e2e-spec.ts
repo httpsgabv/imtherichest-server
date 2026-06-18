@@ -23,14 +23,13 @@ describe('SignUpWithEmail (E2E)', () => {
     const response = await request(server)
       .post('/api/v1/auth/sign-up/email')
       .send({
-        name: 'John Doe',
+        username: 'johndoe',
         email: 'john@example.com',
         password: '12345678',
       });
 
     expect(response.status).toBe(201);
     expect(response.body.user).toMatchObject({
-      name: 'John Doe',
       email: 'john@example.com',
       emailVerified: false,
     });
@@ -39,7 +38,7 @@ describe('SignUpWithEmail (E2E)', () => {
 
   it('[POST] /api/v1/auth/sign-up/email → 201 user is persisted in the database', async () => {
     await request(server).post('/api/v1/auth/sign-up/email').send({
-      name: 'Jane Doe',
+      username: 'janedoe',
       email: 'jane@example.com',
       password: '12345678',
     });
@@ -50,14 +49,13 @@ describe('SignUpWithEmail (E2E)', () => {
 
     expect(user).not.toBeNull();
     expect(user).toMatchObject({
-      name: 'Jane Doe',
       email: 'jane@example.com',
     });
   });
 
   it('[POST] /api/v1/auth/sign-up/email → 409 when email is already in use', async () => {
     await request(server).post('/api/v1/auth/sign-up/email').send({
-      name: 'John Doe',
+      username: 'dupuser1',
       email: 'duplicate@example.com',
       password: '12345678',
     });
@@ -65,7 +63,7 @@ describe('SignUpWithEmail (E2E)', () => {
     const response = await request(server)
       .post('/api/v1/auth/sign-up/email')
       .send({
-        name: 'John Doe',
+        username: 'dupuser2',
         email: 'duplicate@example.com',
         password: '12345678',
       });
@@ -78,8 +76,8 @@ describe('SignUpWithEmail (E2E)', () => {
     const response = await request(server)
       .post('/api/v1/auth/sign-up/email')
       .send({
-        name: 'John Doe',
-        email: 'john@example.com',
+        username: 'johndoe2',
+        email: 'john2@example.com',
       });
 
     expect(response.status).toBe(400);
@@ -91,8 +89,8 @@ describe('SignUpWithEmail (E2E)', () => {
     const response = await request(server)
       .post('/api/v1/auth/sign-up/email')
       .send({
-        name: 'John Doe',
-        email: 'john@example.com',
+        username: 'johndoe3',
+        email: 'john3@example.com',
         password: '123',
       });
 

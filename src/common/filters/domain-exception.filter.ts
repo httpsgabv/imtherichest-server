@@ -12,8 +12,13 @@ import { buildErrorResponse } from './build-error-response.js';
 
 const HTTP_STATUS_BY_CODE: Record<string, number> = {
   EMAIL_ALREADY_IN_USE: HttpStatus.CONFLICT,
+  USERNAME_ALREADY_TAKEN: HttpStatus.CONFLICT,
   AUTH_PROVIDER_ERROR: HttpStatus.BAD_GATEWAY,
   INVALID_CREDENTIALS: HttpStatus.UNAUTHORIZED,
+  SESSION_NOT_FOUND: HttpStatus.UNAUTHORIZED,
+  INVALID_PASSWORD: HttpStatus.UNAUTHORIZED,
+  RESOURCE_NOT_FOUND: HttpStatus.NOT_FOUND,
+  NOT_ALLOWED: HttpStatus.FORBIDDEN,
 };
 
 @Catch(DomainError)

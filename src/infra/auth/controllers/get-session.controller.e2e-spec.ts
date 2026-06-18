@@ -6,9 +6,10 @@ import { createNestApp } from '../../../../test/create-nest-app.js';
 async function signUpAndGetCookies(
   server: Server,
   email: string,
+  username: string,
 ): Promise<string[]> {
   const res = await request(server).post('/api/v1/auth/sign-up/email').send({
-    name: 'Test User',
+    username,
     email,
     password: '12345678',
   });
@@ -32,6 +33,7 @@ describe('GetSession (E2E)', () => {
     const cookies = await signUpAndGetCookies(
       server,
       'get-session-success@example.com',
+      'getsession',
     );
 
     const response = await request(server)
@@ -40,7 +42,6 @@ describe('GetSession (E2E)', () => {
 
     expect(response.status).toBe(200);
     expect(response.body.user).toMatchObject({
-      name: 'Test User',
       email: 'get-session-success@example.com',
       emailVerified: false,
     });

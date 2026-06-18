@@ -6,9 +6,10 @@ import { createNestApp } from '../../../../test/create-nest-app.js';
 async function signUpAndGetCookies(
   server: Server,
   email: string,
+  username: string,
 ): Promise<string[]> {
   const res = await request(server).post('/api/v1/auth/sign-up/email').send({
-    name: 'Export User',
+    username,
     email,
     password: '12345678',
   });
@@ -30,7 +31,7 @@ describe('ExportUserData (E2E)', () => {
 
   it('[GET] /api/v1/users/me/export → 200 with all user data', async () => {
     const email = 'export-user-success@example.com';
-    const cookies = await signUpAndGetCookies(server, email);
+    const cookies = await signUpAndGetCookies(server, email, 'export_success');
 
     const response = await request(server)
       .get('/api/v1/users/me/export')
@@ -51,6 +52,7 @@ describe('ExportUserData (E2E)', () => {
     const cookies = await signUpAndGetCookies(
       server,
       'export-user-empty@example.com',
+      'export_empty',
     );
 
     const response = await request(server)
@@ -64,10 +66,12 @@ describe('ExportUserData (E2E)', () => {
     const cookiesA = await signUpAndGetCookies(
       server,
       'export-user-a@example.com',
+      'export_user_a',
     );
     const cookiesB = await signUpAndGetCookies(
       server,
       'export-user-b@example.com',
+      'export_user_b',
     );
 
     const response = await request(server)

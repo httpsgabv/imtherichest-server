@@ -18,7 +18,7 @@ describe('SignInWithEmail (E2E)', () => {
 
   it('[POST] /api/v1/auth/sign-in/email → 200 with user object and Set-Cookie header', async () => {
     await request(server).post('/api/v1/auth/sign-up/email').send({
-      name: 'John Doe',
+      username: 'signin_success',
       email: 'signin-success@example.com',
       password: '12345678',
     });
@@ -32,7 +32,6 @@ describe('SignInWithEmail (E2E)', () => {
 
     expect(response.status).toBe(200);
     expect(response.body.user).toMatchObject({
-      name: 'John Doe',
       email: 'signin-success@example.com',
       emailVerified: false,
     });
@@ -41,7 +40,7 @@ describe('SignInWithEmail (E2E)', () => {
 
   it('[POST] /api/v1/auth/sign-in/email → 401 when password is wrong', async () => {
     await request(server).post('/api/v1/auth/sign-up/email').send({
-      name: 'Jane Doe',
+      username: 'signin_badpass',
       email: 'signin-badpass@example.com',
       password: '12345678',
     });

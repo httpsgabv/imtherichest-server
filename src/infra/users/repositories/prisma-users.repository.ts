@@ -33,9 +33,7 @@ export class PrismaUsersRepository extends UsersRepository {
   }
 
   async findByIdWithAllData(id: string): Promise<UserExportData | null> {
-    const row = await this.prisma.user.findUnique({
-      where: { id },
-    });
+    const row = await this.prisma.user.findUnique({ where: { id } });
 
     if (!row) return null;
 
