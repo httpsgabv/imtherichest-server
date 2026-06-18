@@ -1,5 +1,6 @@
 import { UniqueEntityID } from '#core/entities/unique-entity-id.js';
 import { Profile } from '#domain/users/entities/profile.js';
+import { PrivacySettings } from '#domain/users/entities/privacy-settings.js';
 import { faker } from '@faker-js/faker';
 
 type ProfileOverride = {
@@ -11,6 +12,7 @@ type ProfileOverride = {
   avatarUrl?: string | null;
   points?: number;
   totalPaid?: number;
+  privacySettings?: PrivacySettings | null;
   createdAt?: Date;
   updatedAt?: Date | null;
 };
@@ -19,7 +21,7 @@ export function makeProfile(
   override: ProfileOverride = {},
   id?: UniqueEntityID,
 ): Profile {
-  return Profile.create(
+  const profile = Profile.create(
     {
       userId: new UniqueEntityID(),
       username: faker.internet
@@ -32,4 +34,15 @@ export function makeProfile(
     },
     id,
   );
+
+  if (
+    profile.privacySettings === null &&
+    override.privacySettings === undefined
+  ) {
+    profile.setPrivacySettings(
+      PrivacySettings.create({ profileId: profile.id }),
+    );
+  }
+
+  return profile;
 }

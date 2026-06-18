@@ -386,6 +386,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 export const ModelName = {
   User: 'User',
   Profile: 'Profile',
+  PrivacySettings: 'PrivacySettings',
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification'
@@ -404,7 +405,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "profile" | "session" | "account" | "verification"
+    modelProps: "user" | "profile" | "privacySettings" | "session" | "account" | "verification"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -553,6 +554,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.ProfileCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.ProfileCountAggregateOutputType> | number
+        }
+      }
+    }
+    PrivacySettings: {
+      payload: Prisma.$PrivacySettingsPayload<ExtArgs>
+      fields: Prisma.PrivacySettingsFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PrivacySettingsFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrivacySettingsPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PrivacySettingsFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrivacySettingsPayload>
+        }
+        findFirst: {
+          args: Prisma.PrivacySettingsFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrivacySettingsPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PrivacySettingsFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrivacySettingsPayload>
+        }
+        findMany: {
+          args: Prisma.PrivacySettingsFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrivacySettingsPayload>[]
+        }
+        create: {
+          args: Prisma.PrivacySettingsCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrivacySettingsPayload>
+        }
+        createMany: {
+          args: Prisma.PrivacySettingsCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PrivacySettingsCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrivacySettingsPayload>[]
+        }
+        delete: {
+          args: Prisma.PrivacySettingsDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrivacySettingsPayload>
+        }
+        update: {
+          args: Prisma.PrivacySettingsUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrivacySettingsPayload>
+        }
+        deleteMany: {
+          args: Prisma.PrivacySettingsDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PrivacySettingsUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PrivacySettingsUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrivacySettingsPayload>[]
+        }
+        upsert: {
+          args: Prisma.PrivacySettingsUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PrivacySettingsPayload>
+        }
+        aggregate: {
+          args: Prisma.PrivacySettingsAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePrivacySettings>
+        }
+        groupBy: {
+          args: Prisma.PrivacySettingsGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PrivacySettingsGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PrivacySettingsCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PrivacySettingsCountAggregateOutputType> | number
         }
       }
     }
@@ -847,6 +922,18 @@ export const ProfileScalarFieldEnum = {
 export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
 
 
+export const PrivacySettingsScalarFieldEnum = {
+  id: 'id',
+  profileId: 'profileId',
+  publicProfile: 'publicProfile',
+  showTotalPaid: 'showTotalPaid',
+  showAchievements: 'showAchievements',
+  showActivity: 'showActivity'
+} as const
+
+export type PrivacySettingsScalarFieldEnum = (typeof PrivacySettingsScalarFieldEnum)[keyof typeof PrivacySettingsScalarFieldEnum]
+
+
 export const SessionScalarFieldEnum = {
   id: 'id',
   expiresAt: 'expiresAt',
@@ -1096,6 +1183,7 @@ export type PrismaClientOptions = ({
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
   profile?: Prisma.ProfileOmit
+  privacySettings?: Prisma.PrivacySettingsOmit
   session?: Prisma.SessionOmit
   account?: Prisma.AccountOmit
   verification?: Prisma.VerificationOmit

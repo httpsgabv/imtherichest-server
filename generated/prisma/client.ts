@@ -52,6 +52,11 @@ export type User = Prisma.UserModel
  */
 export type Profile = Prisma.ProfileModel
 /**
+ * Model PrivacySettings
+ * 
+ */
+export type PrivacySettings = Prisma.PrivacySettingsModel
+/**
  * Model Session
  * 
  */

@@ -1,5 +1,6 @@
 import { UniqueEntityID } from '#core/entities/unique-entity-id.js';
 import { UsernameAlreadyTakenError } from '#domain/users/errors/username-already-taken.error.js';
+import { PrivacySettings } from '#domain/users/entities/privacy-settings.js';
 import { makeProfile } from '#test/factories/make-profile.js';
 import { InMemoryProfilesRepository } from '#test/users/in-memory-profiles-repository.js';
 import { CreateProfileUseCase } from './create-profile.use-case.js';
@@ -92,18 +93,56 @@ describe('CreateProfileUseCase', () => {
   });
 
   it('should allow different users to register with different usernames', async () => {
-    await sut.execute({ userId: USER_1, username: 'alice', displayName: 'Alice' });
-    const result = await sut.execute({ userId: USER_2, username: 'bob', displayName: 'Bob' });
+    await sut.execute({
+      userId: USER_1,
+      username: 'alice',
+      displayName: 'Alice',
+    });
+    const result = await sut.execute({
+      userId: USER_2,
+      username: 'bob',
+      displayName: 'Bob',
+    });
 
     expect(result.isSuccess()).toBe(true);
     expect(repository.items).toHaveLength(2);
   });
 
   it('should assign a unique id to each created profile', async () => {
-    await sut.execute({ userId: USER_1, username: 'alice', displayName: 'Alice' });
+    await sut.execute({
+      userId: USER_1,
+      username: 'alice',
+      displayName: 'Alice',
+    });
     await sut.execute({ userId: USER_2, username: 'bob', displayName: 'Bob' });
 
     const [first, second] = repository.items;
     expect(first.id.toString()).not.toBe(second.id.toString());
+  });
+
+  it('should attach PrivacySettings with all defaults set to true', async () => {
+    await sut.execute({
+      userId: USER_1,
+      username: 'john_doe',
+      displayName: 'John Doe',
+    });
+
+    const profile = repository.items[0];
+    expect(profile.privacySettings).toBeInstanceOf(PrivacySettings);
+    expect(profile.privacySettings?.publicProfile).toBe(true);
+    expect(profile.privacySettings?.showTotalPaid).toBe(true);
+    expect(profile.privacySettings?.showAchievements).toBe(true);
+    expect(profile.privacySettings?.showActivity).toBe(true);
+  });
+
+  it('should link PrivacySettings to the created profile id', async () => {
+    await sut.execute({
+      userId: USER_1,
+      username: 'john_doe',
+      displayName: 'John Doe',
+    });
+
+    const profile = repository.items[0];
+    expect(profile.privacySettings?.profileId.equals(profile.id)).toBe(true);
   });
 });

@@ -1,6 +1,7 @@
 import { Entity } from '#core/entities/entity.js';
 import { UniqueEntityID } from '#core/entities/unique-entity-id.js';
 import type { Optional } from '#core/types/optional.js';
+import type { PrivacySettings } from './privacy-settings.js';
 
 type ProfileProps = {
   userId: UniqueEntityID;
@@ -11,6 +12,7 @@ type ProfileProps = {
   avatarUrl: string | null;
   points: number;
   totalPaid: number;
+  privacySettings: PrivacySettings | null;
   createdAt: Date;
   updatedAt?: Date | null;
 };
@@ -56,10 +58,24 @@ export class Profile extends Entity<ProfileProps> {
     return this.props.updatedAt;
   }
 
+  get privacySettings() {
+    return this.props.privacySettings;
+  }
+
+  setPrivacySettings(privacySettings: PrivacySettings) {
+    this.props.privacySettings = privacySettings;
+  }
+
   static create(
     props: Optional<
       ProfileProps,
-      'bio' | 'country' | 'avatarUrl' | 'points' | 'totalPaid' | 'createdAt'
+      | 'bio'
+      | 'country'
+      | 'avatarUrl'
+      | 'points'
+      | 'totalPaid'
+      | 'privacySettings'
+      | 'createdAt'
     >,
     id?: UniqueEntityID,
   ) {
@@ -70,6 +86,7 @@ export class Profile extends Entity<ProfileProps> {
         avatarUrl: null,
         points: 0,
         totalPaid: 0,
+        privacySettings: null,
         ...props,
         createdAt: props.createdAt ?? new Date(),
       },

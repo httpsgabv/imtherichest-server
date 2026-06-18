@@ -43,11 +43,26 @@ model Profile {
   points    Int @default(0)
   totalPaid Int @default(0)
 
+  privacySettings PrivacySettings?
+
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([points(sort: Desc)])
   @@map("profile")
+}
+
+model PrivacySettings {
+  id        String  @id @default(cuid())
+  profileId String  @unique
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  publicProfile    Boolean @default(true)
+  showTotalPaid    Boolean @default(true)
+  showAchievements Boolean @default(true)
+  showActivity     Boolean @default(true)
+
+  @@map("privacy_settings")
 }
 
 model Session {

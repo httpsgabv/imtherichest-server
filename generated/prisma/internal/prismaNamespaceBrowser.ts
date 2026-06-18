@@ -53,6 +53,7 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Profile: 'Profile',
+  PrivacySettings: 'PrivacySettings',
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification'
@@ -102,6 +103,18 @@ export const ProfileScalarFieldEnum = {
 } as const
 
 export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
+
+
+export const PrivacySettingsScalarFieldEnum = {
+  id: 'id',
+  profileId: 'profileId',
+  publicProfile: 'publicProfile',
+  showTotalPaid: 'showTotalPaid',
+  showAchievements: 'showAchievements',
+  showActivity: 'showActivity'
+} as const
+
+export type PrivacySettingsScalarFieldEnum = (typeof PrivacySettingsScalarFieldEnum)[keyof typeof PrivacySettingsScalarFieldEnum]
 
 
 export const SessionScalarFieldEnum = {

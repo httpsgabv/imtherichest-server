@@ -269,6 +269,7 @@ export type ProfileWhereInput = {
   createdAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  privacySettings?: Prisma.XOR<Prisma.PrivacySettingsNullableScalarRelationFilter, Prisma.PrivacySettingsWhereInput> | null
 }
 
 export type ProfileOrderByWithRelationInput = {
@@ -284,6 +285,7 @@ export type ProfileOrderByWithRelationInput = {
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   user?: Prisma.UserOrderByWithRelationInput
+  privacySettings?: Prisma.PrivacySettingsOrderByWithRelationInput
 }
 
 export type ProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -302,6 +304,7 @@ export type ProfileWhereUniqueInput = Prisma.AtLeast<{
   createdAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Profile"> | Date | string
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
+  privacySettings?: Prisma.XOR<Prisma.PrivacySettingsNullableScalarRelationFilter, Prisma.PrivacySettingsWhereInput> | null
 }, "id" | "userId" | "username">
 
 export type ProfileOrderByWithAggregationInput = {
@@ -352,6 +355,7 @@ export type ProfileCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutProfileInput
+  privacySettings?: Prisma.PrivacySettingsCreateNestedOneWithoutProfileInput
 }
 
 export type ProfileUncheckedCreateInput = {
@@ -366,6 +370,7 @@ export type ProfileUncheckedCreateInput = {
   totalPaid?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  privacySettings?: Prisma.PrivacySettingsUncheckedCreateNestedOneWithoutProfileInput
 }
 
 export type ProfileUpdateInput = {
@@ -380,6 +385,7 @@ export type ProfileUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutProfileNestedInput
+  privacySettings?: Prisma.PrivacySettingsUpdateOneWithoutProfileNestedInput
 }
 
 export type ProfileUncheckedUpdateInput = {
@@ -394,6 +400,7 @@ export type ProfileUncheckedUpdateInput = {
   totalPaid?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  privacySettings?: Prisma.PrivacySettingsUncheckedUpdateOneWithoutProfileNestedInput
 }
 
 export type ProfileCreateManyInput = {
@@ -494,6 +501,11 @@ export type ProfileSumOrderByAggregateInput = {
   totalPaid?: Prisma.SortOrder
 }
 
+export type ProfileScalarRelationFilter = {
+  is?: Prisma.ProfileWhereInput
+  isNot?: Prisma.ProfileWhereInput
+}
+
 export type ProfileCreateNestedOneWithoutUserInput = {
   create?: Prisma.XOR<Prisma.ProfileCreateWithoutUserInput, Prisma.ProfileUncheckedCreateWithoutUserInput>
   connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutUserInput
@@ -534,6 +546,20 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type ProfileCreateNestedOneWithoutPrivacySettingsInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutPrivacySettingsInput, Prisma.ProfileUncheckedCreateWithoutPrivacySettingsInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutPrivacySettingsInput
+  connect?: Prisma.ProfileWhereUniqueInput
+}
+
+export type ProfileUpdateOneRequiredWithoutPrivacySettingsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutPrivacySettingsInput, Prisma.ProfileUncheckedCreateWithoutPrivacySettingsInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutPrivacySettingsInput
+  upsert?: Prisma.ProfileUpsertWithoutPrivacySettingsInput
+  connect?: Prisma.ProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutPrivacySettingsInput, Prisma.ProfileUpdateWithoutPrivacySettingsInput>, Prisma.ProfileUncheckedUpdateWithoutPrivacySettingsInput>
+}
+
 export type ProfileCreateWithoutUserInput = {
   id?: string
   username: string
@@ -545,6 +571,7 @@ export type ProfileCreateWithoutUserInput = {
   totalPaid?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  privacySettings?: Prisma.PrivacySettingsCreateNestedOneWithoutProfileInput
 }
 
 export type ProfileUncheckedCreateWithoutUserInput = {
@@ -558,6 +585,7 @@ export type ProfileUncheckedCreateWithoutUserInput = {
   totalPaid?: number
   createdAt?: Date | string
   updatedAt?: Date | string
+  privacySettings?: Prisma.PrivacySettingsUncheckedCreateNestedOneWithoutProfileInput
 }
 
 export type ProfileCreateOrConnectWithoutUserInput = {
@@ -587,10 +615,84 @@ export type ProfileUpdateWithoutUserInput = {
   totalPaid?: Prisma.IntFieldUpdateOperationsInput | number
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  privacySettings?: Prisma.PrivacySettingsUpdateOneWithoutProfileNestedInput
 }
 
 export type ProfileUncheckedUpdateWithoutUserInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  points?: Prisma.IntFieldUpdateOperationsInput | number
+  totalPaid?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  privacySettings?: Prisma.PrivacySettingsUncheckedUpdateOneWithoutProfileNestedInput
+}
+
+export type ProfileCreateWithoutPrivacySettingsInput = {
+  id?: string
+  username: string
+  displayName: string
+  bio?: string
+  country?: string
+  avatarUrl?: string | null
+  points?: number
+  totalPaid?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutProfileInput
+}
+
+export type ProfileUncheckedCreateWithoutPrivacySettingsInput = {
+  id?: string
+  userId: string
+  username: string
+  displayName: string
+  bio?: string
+  country?: string
+  avatarUrl?: string | null
+  points?: number
+  totalPaid?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type ProfileCreateOrConnectWithoutPrivacySettingsInput = {
+  where: Prisma.ProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutPrivacySettingsInput, Prisma.ProfileUncheckedCreateWithoutPrivacySettingsInput>
+}
+
+export type ProfileUpsertWithoutPrivacySettingsInput = {
+  update: Prisma.XOR<Prisma.ProfileUpdateWithoutPrivacySettingsInput, Prisma.ProfileUncheckedUpdateWithoutPrivacySettingsInput>
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutPrivacySettingsInput, Prisma.ProfileUncheckedCreateWithoutPrivacySettingsInput>
+  where?: Prisma.ProfileWhereInput
+}
+
+export type ProfileUpdateToOneWithWhereWithoutPrivacySettingsInput = {
+  where?: Prisma.ProfileWhereInput
+  data: Prisma.XOR<Prisma.ProfileUpdateWithoutPrivacySettingsInput, Prisma.ProfileUncheckedUpdateWithoutPrivacySettingsInput>
+}
+
+export type ProfileUpdateWithoutPrivacySettingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  points?: Prisma.IntFieldUpdateOperationsInput | number
+  totalPaid?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutProfileNestedInput
+}
+
+export type ProfileUncheckedUpdateWithoutPrivacySettingsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
   username?: Prisma.StringFieldUpdateOperationsInput | string
   displayName?: Prisma.StringFieldUpdateOperationsInput | string
   bio?: Prisma.StringFieldUpdateOperationsInput | string
@@ -617,6 +719,7 @@ export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   createdAt?: boolean
   updatedAt?: boolean
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  privacySettings?: boolean | Prisma.Profile$privacySettingsArgs<ExtArgs>
 }, ExtArgs["result"]["profile"]>
 
 export type ProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -666,6 +769,7 @@ export type ProfileSelectScalar = {
 export type ProfileOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "userId" | "username" | "displayName" | "bio" | "country" | "avatarUrl" | "points" | "totalPaid" | "createdAt" | "updatedAt", ExtArgs["result"]["profile"]>
 export type ProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
+  privacySettings?: boolean | Prisma.Profile$privacySettingsArgs<ExtArgs>
 }
 export type ProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -678,6 +782,7 @@ export type $ProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   name: "Profile"
   objects: {
     user: Prisma.$UserPayload<ExtArgs>
+    privacySettings: Prisma.$PrivacySettingsPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1086,6 +1191,7 @@ readonly fields: ProfileFieldRefs;
 export interface Prisma__ProfileClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  privacySettings<T extends Prisma.Profile$privacySettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$privacySettingsArgs<ExtArgs>>): Prisma.Prisma__PrivacySettingsClient<runtime.Types.Result.GetResult<Prisma.$PrivacySettingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1524,6 +1630,25 @@ export type ProfileDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Inter
    * Limit how many Profiles to delete.
    */
   limit?: number
+}
+
+/**
+ * Profile.privacySettings
+ */
+export type Profile$privacySettingsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PrivacySettings
+   */
+  select?: Prisma.PrivacySettingsSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PrivacySettings
+   */
+  omit?: Prisma.PrivacySettingsOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PrivacySettingsInclude<ExtArgs> | null
+  where?: Prisma.PrivacySettingsWhereInput
 }
 
 /**
