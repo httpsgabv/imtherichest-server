@@ -45,12 +45,27 @@ model Profile {
 
   privacySettings      PrivacySettings?
   notificationSettings NotificationSettings?
+  payments             Payment[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@index([points(sort: Desc)])
   @@map("profile")
+}
+
+model Payment {
+  id        String  @id @default(cuid())
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  amount Int // in cents
+  points Int // Math.round(amount / 100)
+
+  createdAt DateTime @default(now())
+
+  @@index([profileId, createdAt(sort: Desc)])
+  @@map("payment")
 }
 
 model PrivacySettings {
