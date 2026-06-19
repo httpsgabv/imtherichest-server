@@ -63,7 +63,7 @@ describe('ExportUserData (E2E)', () => {
   });
 
   it('[GET] /api/v1/users/me/export → 200 only includes requester data', async () => {
-    const cookiesA = await signUpAndGetCookies(
+    await signUpAndGetCookies(
       server,
       'export-user-a@example.com',
       'export_user_a',

@@ -47,7 +47,11 @@ describe('UpdatePassword (E2E)', () => {
 
   it('[POST] /api/v1/auth/update-password → 200 and can sign in with new password after update', async () => {
     const email = 'update-pw-relogin@example.com';
-    const cookies = await signUpAndGetCookies(email, 'updatepw_relogin', '12345678');
+    const cookies = await signUpAndGetCookies(
+      email,
+      'updatepw_relogin',
+      '12345678',
+    );
 
     await request(server)
       .post('/api/v1/auth/update-password')

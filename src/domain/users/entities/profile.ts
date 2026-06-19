@@ -2,6 +2,7 @@ import { Entity } from '#core/entities/entity.js';
 import { UniqueEntityID } from '#core/entities/unique-entity-id.js';
 import type { Optional } from '#core/types/optional.js';
 import type { PrivacySettings } from './privacy-settings.js';
+import type { NotificationSettings } from './notification-settings.js';
 
 type ProfileProps = {
   userId: UniqueEntityID;
@@ -13,6 +14,7 @@ type ProfileProps = {
   points: number;
   totalPaid: number;
   privacySettings: PrivacySettings | null;
+  notificationSettings: NotificationSettings | null;
   createdAt: Date;
   updatedAt?: Date | null;
 };
@@ -62,8 +64,16 @@ export class Profile extends Entity<ProfileProps> {
     return this.props.privacySettings;
   }
 
+  get notificationSettings() {
+    return this.props.notificationSettings;
+  }
+
   setPrivacySettings(privacySettings: PrivacySettings) {
     this.props.privacySettings = privacySettings;
+  }
+
+  setNotificationSettings(notificationSettings: NotificationSettings) {
+    this.props.notificationSettings = notificationSettings;
   }
 
   static create(
@@ -75,6 +85,7 @@ export class Profile extends Entity<ProfileProps> {
       | 'points'
       | 'totalPaid'
       | 'privacySettings'
+      | 'notificationSettings'
       | 'createdAt'
     >,
     id?: UniqueEntityID,
@@ -87,6 +98,7 @@ export class Profile extends Entity<ProfileProps> {
         points: 0,
         totalPaid: 0,
         privacySettings: null,
+        notificationSettings: null,
         ...props,
         createdAt: props.createdAt ?? new Date(),
       },

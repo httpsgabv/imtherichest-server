@@ -54,6 +54,7 @@ export const ModelName = {
   User: 'User',
   Profile: 'Profile',
   PrivacySettings: 'PrivacySettings',
+  NotificationSettings: 'NotificationSettings',
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification'
@@ -115,6 +116,18 @@ export const PrivacySettingsScalarFieldEnum = {
 } as const
 
 export type PrivacySettingsScalarFieldEnum = (typeof PrivacySettingsScalarFieldEnum)[keyof typeof PrivacySettingsScalarFieldEnum]
+
+
+export const NotificationSettingsScalarFieldEnum = {
+  id: 'id',
+  profileId: 'profileId',
+  achievementAlerts: 'achievementAlerts',
+  rankAlerts: 'rankAlerts',
+  paymentConfirmations: 'paymentConfirmations',
+  marketingEmails: 'marketingEmails'
+} as const
+
+export type NotificationSettingsScalarFieldEnum = (typeof NotificationSettingsScalarFieldEnum)[keyof typeof NotificationSettingsScalarFieldEnum]
 
 
 export const SessionScalarFieldEnum = {

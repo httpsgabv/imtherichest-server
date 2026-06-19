@@ -2,13 +2,14 @@ import type { Prisma } from '#generated/prisma/client.js';
 import { UniqueEntityID } from '#core/entities/unique-entity-id.js';
 import { Profile } from '#domain/users/entities/profile.js';
 import { PrivacySettings } from '#domain/users/entities/privacy-settings.js';
+import { NotificationSettings } from '#domain/users/entities/notification-settings.js';
 
-type ProfileWithPrivacySettings = Prisma.ProfileGetPayload<{
-  include: { privacySettings: true };
+type ProfileWithSettings = Prisma.ProfileGetPayload<{
+  include: { privacySettings: true; notificationSettings: true };
 }>;
 
 export class PrismaProfileMapper {
-  static toDomain(raw: ProfileWithPrivacySettings): Profile {
+  static toDomain(raw: ProfileWithSettings): Profile {
     return Profile.create(
       {
         userId: new UniqueEntityID(raw.userId),
@@ -31,6 +32,21 @@ export class PrismaProfileMapper {
                 showActivity: raw.privacySettings.showActivity,
               },
               new UniqueEntityID(raw.privacySettings.id),
+            )
+          : null,
+        notificationSettings: raw.notificationSettings
+          ? NotificationSettings.create(
+              {
+                profileId: new UniqueEntityID(
+                  raw.notificationSettings.profileId,
+                ),
+                achievementAlerts: raw.notificationSettings.achievementAlerts,
+                rankAlerts: raw.notificationSettings.rankAlerts,
+                paymentConfirmations:
+                  raw.notificationSettings.paymentConfirmations,
+                marketingEmails: raw.notificationSettings.marketingEmails,
+              },
+              new UniqueEntityID(raw.notificationSettings.id),
             )
           : null,
       },
@@ -57,6 +73,18 @@ export class PrismaProfileMapper {
               showTotalPaid: profile.privacySettings.showTotalPaid,
               showAchievements: profile.privacySettings.showAchievements,
               showActivity: profile.privacySettings.showActivity,
+            },
+          }
+        : undefined,
+      notificationSettings: profile.notificationSettings
+        ? {
+            create: {
+              id: profile.notificationSettings.id.toString(),
+              achievementAlerts: profile.notificationSettings.achievementAlerts,
+              rankAlerts: profile.notificationSettings.rankAlerts,
+              paymentConfirmations:
+                profile.notificationSettings.paymentConfirmations,
+              marketingEmails: profile.notificationSettings.marketingEmails,
             },
           }
         : undefined,

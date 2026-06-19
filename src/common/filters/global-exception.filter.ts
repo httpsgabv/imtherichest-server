@@ -29,7 +29,7 @@ function normalizeExceptionResponse(response: unknown): ExceptionResponseBody {
   }
 
   if (isObject(response)) {
-    return response as ExceptionResponseBody;
+    return response;
   }
 
   return {

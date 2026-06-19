@@ -14,7 +14,7 @@ export class PrismaProfilesRepository extends ProfilesRepository {
   async findByUserId(userId: UniqueEntityID): Promise<Profile | null> {
     const row = await this.prisma.profile.findUnique({
       where: { userId: userId.toString() },
-      include: { privacySettings: true },
+      include: { privacySettings: true, notificationSettings: true },
     });
 
     if (!row) return null;
@@ -25,7 +25,7 @@ export class PrismaProfilesRepository extends ProfilesRepository {
   async findByUsername(username: string): Promise<Profile | null> {
     const row = await this.prisma.profile.findUnique({
       where: { username },
-      include: { privacySettings: true },
+      include: { privacySettings: true, notificationSettings: true },
     });
 
     if (!row) return null;

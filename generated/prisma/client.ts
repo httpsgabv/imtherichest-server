@@ -57,6 +57,11 @@ export type Profile = Prisma.ProfileModel
  */
 export type PrivacySettings = Prisma.PrivacySettingsModel
 /**
+ * Model NotificationSettings
+ * 
+ */
+export type NotificationSettings = Prisma.NotificationSettingsModel
+/**
  * Model Session
  * 
  */

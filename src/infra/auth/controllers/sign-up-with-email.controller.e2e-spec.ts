@@ -53,6 +53,27 @@ describe('SignUpWithEmail (E2E)', () => {
     });
   });
 
+  it('[POST] /api/v1/auth/sign-up/email → creates notification settings with defaults', async () => {
+    await request(server).post('/api/v1/auth/sign-up/email').send({
+      username: 'notifuser',
+      email: 'notif@example.com',
+      password: '12345678',
+    });
+
+    const profile = await prisma.profile.findFirst({
+      where: { username: 'notifuser' },
+      include: { notificationSettings: true },
+    });
+
+    expect(profile).not.toBeNull();
+    expect(profile!.notificationSettings).toMatchObject({
+      achievementAlerts: true,
+      rankAlerts: true,
+      paymentConfirmations: true,
+      marketingEmails: false,
+    });
+  });
+
   it('[POST] /api/v1/auth/sign-up/email → 409 when email is already in use', async () => {
     await request(server).post('/api/v1/auth/sign-up/email').send({
       username: 'dupuser1',

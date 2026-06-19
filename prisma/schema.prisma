@@ -43,7 +43,8 @@ model Profile {
   points    Int @default(0)
   totalPaid Int @default(0)
 
-  privacySettings PrivacySettings?
+  privacySettings      PrivacySettings?
+  notificationSettings NotificationSettings?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -63,6 +64,19 @@ model PrivacySettings {
   showActivity     Boolean @default(true)
 
   @@map("privacy_settings")
+}
+
+model NotificationSettings {
+  id        String  @id @default(cuid())
+  profileId String  @unique
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  achievementAlerts    Boolean @default(true)
+  rankAlerts           Boolean @default(true)
+  paymentConfirmations Boolean @default(true)
+  marketingEmails      Boolean @default(false)
+
+  @@map("notification_settings")
 }
 
 model Session {

@@ -4,6 +4,7 @@ import { failure, success, type Either } from '#core/utils/either.js';
 import type { UseCase } from '#core/use-cases/use-case.js';
 import { Profile } from '../entities/profile.js';
 import { PrivacySettings } from '../entities/privacy-settings.js';
+import { NotificationSettings } from '../entities/notification-settings.js';
 import { ProfilesRepository } from '../repositories/profiles-repository.js';
 import { UsernameAlreadyTakenError } from '../errors/username-already-taken.error.js';
 
@@ -44,6 +45,11 @@ export class CreateProfileUseCase implements UseCase<
 
     const privacySettings = PrivacySettings.create({ profileId: profile.id });
     profile.setPrivacySettings(privacySettings);
+
+    const notificationSettings = NotificationSettings.create({
+      profileId: profile.id,
+    });
+    profile.setNotificationSettings(notificationSettings);
 
     await this.profilesRepository.create(profile);
 

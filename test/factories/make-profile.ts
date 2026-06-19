@@ -1,6 +1,7 @@
 import { UniqueEntityID } from '#core/entities/unique-entity-id.js';
 import { Profile } from '#domain/users/entities/profile.js';
 import { PrivacySettings } from '#domain/users/entities/privacy-settings.js';
+import { NotificationSettings } from '#domain/users/entities/notification-settings.js';
 import { faker } from '@faker-js/faker';
 
 type ProfileOverride = {
@@ -13,6 +14,7 @@ type ProfileOverride = {
   points?: number;
   totalPaid?: number;
   privacySettings?: PrivacySettings | null;
+  notificationSettings?: NotificationSettings | null;
   createdAt?: Date;
   updatedAt?: Date | null;
 };
@@ -41,6 +43,15 @@ export function makeProfile(
   ) {
     profile.setPrivacySettings(
       PrivacySettings.create({ profileId: profile.id }),
+    );
+  }
+
+  if (
+    profile.notificationSettings === null &&
+    override.notificationSettings === undefined
+  ) {
+    profile.setNotificationSettings(
+      NotificationSettings.create({ profileId: profile.id }),
     );
   }
 

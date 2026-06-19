@@ -1,6 +1,7 @@
 import { UniqueEntityID } from '#core/entities/unique-entity-id.js';
 import { UsernameAlreadyTakenError } from '#domain/users/errors/username-already-taken.error.js';
 import { PrivacySettings } from '#domain/users/entities/privacy-settings.js';
+import { NotificationSettings } from '#domain/users/entities/notification-settings.js';
 import { makeProfile } from '#test/factories/make-profile.js';
 import { InMemoryProfilesRepository } from '#test/users/in-memory-profiles-repository.js';
 import { CreateProfileUseCase } from './create-profile.use-case.js';
@@ -144,5 +145,33 @@ describe('CreateProfileUseCase', () => {
 
     const profile = repository.items[0];
     expect(profile.privacySettings?.profileId.equals(profile.id)).toBe(true);
+  });
+
+  it('should attach NotificationSettings with correct defaults', async () => {
+    await sut.execute({
+      userId: USER_1,
+      username: 'john_doe',
+      displayName: 'John Doe',
+    });
+
+    const profile = repository.items[0];
+    expect(profile.notificationSettings).toBeInstanceOf(NotificationSettings);
+    expect(profile.notificationSettings?.achievementAlerts).toBe(true);
+    expect(profile.notificationSettings?.rankAlerts).toBe(true);
+    expect(profile.notificationSettings?.paymentConfirmations).toBe(true);
+    expect(profile.notificationSettings?.marketingEmails).toBe(false);
+  });
+
+  it('should link NotificationSettings to the created profile id', async () => {
+    await sut.execute({
+      userId: USER_1,
+      username: 'john_doe',
+      displayName: 'John Doe',
+    });
+
+    const profile = repository.items[0];
+    expect(profile.notificationSettings?.profileId.equals(profile.id)).toBe(
+      true,
+    );
   });
 });
