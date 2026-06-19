@@ -38,4 +38,17 @@ export class PrismaProfilesRepository extends ProfilesRepository {
       data: PrismaProfileMapper.toPrisma(profile),
     });
   }
+
+  async save(profile: Profile): Promise<void> {
+    await this.prisma.profile.update({
+      where: { id: profile.id.toString() },
+      data: {
+        displayName: profile.displayName,
+        bio: profile.bio,
+        country: profile.country,
+        avatarUrl: profile.avatarUrl,
+        updatedAt: profile.updatedAt ?? new Date(),
+      },
+    });
+  }
 }

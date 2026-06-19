@@ -7,6 +7,9 @@ import { PrismaClient } from '#generated/prisma/client.js';
 config({ path: '.env', override: true });
 config({ path: '.env.test', override: true });
 
+// Force test mode so throttler and BetterAuth rate limit are disabled.
+process.env.NODE_ENV = 'test';
+
 const schemaId = randomUUID();
 const baseUrl = new URL(process.env.DATABASE_URL!);
 baseUrl.searchParams.set('schema', schemaId);

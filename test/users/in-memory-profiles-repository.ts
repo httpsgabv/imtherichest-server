@@ -16,4 +16,11 @@ export class InMemoryProfilesRepository extends ProfilesRepository {
   async create(profile: Profile): Promise<void> {
     this.items.push(profile);
   }
+
+  async save(profile: Profile): Promise<void> {
+    const index = this.items.findIndex((p) => p.id.equals(profile.id));
+    if (index >= 0) {
+      this.items[index] = profile;
+    }
+  }
 }

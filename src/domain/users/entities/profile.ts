@@ -76,6 +76,20 @@ export class Profile extends Entity<ProfileProps> {
     this.props.notificationSettings = notificationSettings;
   }
 
+  update(fields: {
+    displayName?: string;
+    bio?: string;
+    country?: string;
+    avatarUrl?: string | null;
+  }) {
+    if (fields.displayName !== undefined)
+      this.props.displayName = fields.displayName;
+    if (fields.bio !== undefined) this.props.bio = fields.bio;
+    if (fields.country !== undefined) this.props.country = fields.country;
+    if (fields.avatarUrl !== undefined) this.props.avatarUrl = fields.avatarUrl;
+    this.props.updatedAt = new Date();
+  }
+
   static create(
     props: Optional<
       ProfileProps,

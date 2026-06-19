@@ -5,4 +5,5 @@ export abstract class ProfilesRepository {
   abstract findByUserId(userId: UniqueEntityID): Promise<Profile | null>;
   abstract findByUsername(username: string): Promise<Profile | null>;
   abstract create(profile: Profile): Promise<void>;
+  abstract save(profile: Profile): Promise<void>;
 }
