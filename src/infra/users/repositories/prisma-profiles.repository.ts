@@ -51,4 +51,50 @@ export class PrismaProfilesRepository extends ProfilesRepository {
       },
     });
   }
+
+  async savePrivacySettings(profile: Profile): Promise<void> {
+    const settings = profile.privacySettings;
+    if (!settings) return;
+
+    await this.prisma.privacySettings.upsert({
+      where: { profileId: profile.id.toString() },
+      update: {
+        publicProfile: settings.publicProfile,
+        showTotalPaid: settings.showTotalPaid,
+        showAchievements: settings.showAchievements,
+        showActivity: settings.showActivity,
+      },
+      create: {
+        id: settings.id.toString(),
+        profileId: profile.id.toString(),
+        publicProfile: settings.publicProfile,
+        showTotalPaid: settings.showTotalPaid,
+        showAchievements: settings.showAchievements,
+        showActivity: settings.showActivity,
+      },
+    });
+  }
+
+  async saveNotificationSettings(profile: Profile): Promise<void> {
+    const settings = profile.notificationSettings;
+    if (!settings) return;
+
+    await this.prisma.notificationSettings.upsert({
+      where: { profileId: profile.id.toString() },
+      update: {
+        achievementAlerts: settings.achievementAlerts,
+        rankAlerts: settings.rankAlerts,
+        paymentConfirmations: settings.paymentConfirmations,
+        marketingEmails: settings.marketingEmails,
+      },
+      create: {
+        id: settings.id.toString(),
+        profileId: profile.id.toString(),
+        achievementAlerts: settings.achievementAlerts,
+        rankAlerts: settings.rankAlerts,
+        paymentConfirmations: settings.paymentConfirmations,
+        marketingEmails: settings.marketingEmails,
+      },
+    });
+  }
 }

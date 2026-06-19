@@ -23,4 +23,18 @@ export class InMemoryProfilesRepository extends ProfilesRepository {
       this.items[index] = profile;
     }
   }
+
+  async savePrivacySettings(profile: Profile): Promise<void> {
+    const index = this.items.findIndex((p) => p.id.equals(profile.id));
+    if (index >= 0) {
+      this.items[index] = profile;
+    }
+  }
+
+  async saveNotificationSettings(profile: Profile): Promise<void> {
+    const index = this.items.findIndex((p) => p.id.equals(profile.id));
+    if (index >= 0) {
+      this.items[index] = profile;
+    }
+  }
 }

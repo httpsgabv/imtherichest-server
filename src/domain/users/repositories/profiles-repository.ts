@@ -6,4 +6,6 @@ export abstract class ProfilesRepository {
   abstract findByUsername(username: string): Promise<Profile | null>;
   abstract create(profile: Profile): Promise<void>;
   abstract save(profile: Profile): Promise<void>;
+  abstract savePrivacySettings(profile: Profile): Promise<void>;
+  abstract saveNotificationSettings(profile: Profile): Promise<void>;
 }
