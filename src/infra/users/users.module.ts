@@ -4,19 +4,26 @@ import { ProfilesRepository } from '#domain/users/repositories/profiles-reposito
 import { DeleteUserUseCase } from '#domain/users/use-cases/delete-user.use-case.js';
 import { ExportUserDataUseCase } from '#domain/users/use-cases/export-user-data.use-case.js';
 import { CreateProfileUseCase } from '#domain/users/use-cases/create-profile.use-case.js';
+import { GetMyProfileUseCase } from '#domain/users/use-cases/get-my-profile.use-case.js';
 import { DatabaseModule } from '#infra/database/database.module.js';
 import { DeleteUserController } from './controllers/delete-user.controller.js';
 import { ExportUserDataController } from './controllers/export-user-data.controller.js';
+import { GetMyProfileController } from './controllers/get-my-profile.controller.js';
 import { PrismaUsersRepository } from './repositories/prisma-users.repository.js';
 import { PrismaProfilesRepository } from './repositories/prisma-profiles.repository.js';
 
 @Module({
   imports: [DatabaseModule],
-  controllers: [DeleteUserController, ExportUserDataController],
+  controllers: [
+    DeleteUserController,
+    ExportUserDataController,
+    GetMyProfileController,
+  ],
   providers: [
     DeleteUserUseCase,
     ExportUserDataUseCase,
     CreateProfileUseCase,
+    GetMyProfileUseCase,
     {
       provide: UsersRepository,
       useClass: PrismaUsersRepository,
