@@ -46,6 +46,7 @@ model Profile {
   privacySettings      PrivacySettings?
   notificationSettings NotificationSettings?
   payments             Payment[]
+  achievements         UserAchievement[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
@@ -66,6 +67,19 @@ model Payment {
 
   @@index([profileId, createdAt(sort: Desc)])
   @@map("payment")
+}
+
+model UserAchievement {
+  id            String  @id @default(cuid())
+  profileId     String
+  profile       Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+  achievementId String
+
+  unlockedAt DateTime @default(now())
+
+  @@unique([profileId, achievementId])
+  @@index([profileId])
+  @@map("user_achievement")
 }
 
 model PrivacySettings {
