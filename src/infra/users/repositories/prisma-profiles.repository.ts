@@ -108,20 +108,4 @@ export class PrismaProfilesRepository extends ProfilesRepository {
       },
     });
   }
-
-  // TODO: move getProfileRank to LeaderboardRepository when leaderboard domain is built
-  async getProfileRank(profileId: UniqueEntityID): Promise<number> {
-    const profile = await this.prisma.profile.findUnique({
-      where: { id: profileId.toString() },
-      select: { points: true },
-    });
-
-    if (!profile) return 1;
-
-    const ahead = await this.prisma.profile.count({
-      where: { points: { gt: profile.points } },
-    });
-
-    return ahead + 1;
-  }
 }

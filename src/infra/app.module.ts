@@ -15,6 +15,7 @@ import { DatabaseModule } from '#infra/database/database.module.js';
 import { AuthModule } from '#infra/auth/auth.module.js';
 import { UsersModule } from '#infra/users/users.module.js';
 import { PaymentsModule } from '#infra/payments/payments.module.js';
+import { LeaderboardModule } from '#infra/leaderboard/leaderboard.module.js';
 import { HealthModule } from './health/health.module.js';
 
 @Module({
@@ -30,6 +31,7 @@ import { HealthModule } from './health/health.module.js';
     AuthModule,
     UsersModule,
     PaymentsModule,
+    LeaderboardModule,
   ],
   providers: [EnvService],
 })

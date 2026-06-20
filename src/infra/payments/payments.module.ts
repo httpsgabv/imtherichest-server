@@ -4,6 +4,7 @@ import { CreatePaymentUseCase } from '#domain/payments/use-cases/create-payment.
 import { GetPublicUserPaymentsUseCase } from '#domain/payments/use-cases/get-public-user-payments.use-case.js';
 import { GetUserPaymentsUseCase } from '#domain/payments/use-cases/get-user-payments.use-case.js';
 import { DatabaseModule } from '#infra/database/database.module.js';
+import { LeaderboardModule } from '#infra/leaderboard/leaderboard.module.js';
 import { UsersModule } from '#infra/users/users.module.js';
 import { CreatePaymentController } from './controllers/create-payment.controller.js';
 import { GetPublicUserPaymentsController } from './controllers/get-public-user-payments.controller.js';
@@ -11,7 +12,7 @@ import { GetUserPaymentsController } from './controllers/get-user-payments.contr
 import { PrismaPaymentsRepository } from './repositories/prisma-payments.repository.js';
 
 @Module({
-  imports: [DatabaseModule, UsersModule],
+  imports: [DatabaseModule, UsersModule, LeaderboardModule],
   controllers: [
     CreatePaymentController,
     GetUserPaymentsController,

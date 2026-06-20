@@ -44,11 +44,4 @@ export class InMemoryProfilesRepository extends ProfilesRepository {
       this.items[index] = profile;
     }
   }
-
-  // TODO: move getProfileRank to LeaderboardRepository when leaderboard domain is built
-  async getProfileRank(profileId: UniqueEntityID): Promise<number> {
-    const profile = this.items.find((p) => p.id.equals(profileId));
-    if (!profile) return 1;
-    return this.items.filter((p) => p.points > profile.points).length + 1;
-  }
 }

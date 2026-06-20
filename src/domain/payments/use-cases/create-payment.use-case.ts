@@ -4,6 +4,7 @@ import { ResourceNotFoundError } from '#core/errors/errors/resource-not-found.er
 import type { UseCase } from '#core/use-cases/use-case.js';
 import type { Either } from '#core/utils/either.js';
 import { failure, success } from '#core/utils/either.js';
+import { LeaderboardRepository } from '#domain/leaderboard/repositories/leaderboard-repository.js';
 import { ProfilesRepository } from '#domain/users/repositories/profiles-repository.js';
 import { Payment } from '../entities/payment.js';
 import { InvalidAmountError } from '../errors/invalid-amount.error.js';
@@ -31,6 +32,7 @@ export class CreatePaymentUseCase implements UseCase<
   constructor(
     private readonly paymentsRepository: PaymentsRepository,
     private readonly profilesRepository: ProfilesRepository,
+    private readonly leaderboardRepository: LeaderboardRepository,
   ) {}
 
   async execute(
@@ -58,7 +60,7 @@ export class CreatePaymentUseCase implements UseCase<
     await this.paymentsRepository.create(payment);
     await this.profilesRepository.savePoints(profile);
 
-    const rank = await this.profilesRepository.getProfileRank(profile.id);
+    const rank = await this.leaderboardRepository.getProfileRank(profile.id);
 
     // TODO: call evaluate-achievements use-case when achievements domain is built
     const unlockedAchievements: string[] = [];

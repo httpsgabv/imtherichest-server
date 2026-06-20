@@ -1,6 +1,7 @@
 import { UniqueEntityID } from '#core/entities/unique-entity-id.js';
 import { ResourceNotFoundError } from '#core/errors/errors/resource-not-found.error.js';
 import { makeProfile } from '#test/factories/make-profile.js';
+import { InMemoryLeaderboardRepository } from '#test/leaderboard/in-memory-leaderboard-repository.js';
 import { InMemoryPaymentsRepository } from '#test/payments/in-memory-payments-repository.js';
 import { InMemoryProfilesRepository } from '#test/users/in-memory-profiles-repository.js';
 import { InvalidAmountError } from '../errors/invalid-amount.error.js';
@@ -11,12 +12,20 @@ const USER_ID = new UniqueEntityID('user-1');
 describe('CreatePaymentUseCase', () => {
   let paymentsRepository: InMemoryPaymentsRepository;
   let profilesRepository: InMemoryProfilesRepository;
+  let leaderboardRepository: InMemoryLeaderboardRepository;
   let sut: CreatePaymentUseCase;
 
   beforeEach(() => {
     paymentsRepository = new InMemoryPaymentsRepository();
     profilesRepository = new InMemoryProfilesRepository();
-    sut = new CreatePaymentUseCase(paymentsRepository, profilesRepository);
+    leaderboardRepository = new InMemoryLeaderboardRepository(
+      profilesRepository.items,
+    );
+    sut = new CreatePaymentUseCase(
+      paymentsRepository,
+      profilesRepository,
+      leaderboardRepository,
+    );
   });
 
   it('should create a payment and return correct shape', async () => {
