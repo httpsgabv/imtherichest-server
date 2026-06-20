@@ -6,6 +6,8 @@ import {
   type UserExportData,
 } from '#domain/users/repositories/users-repository.js';
 import { PrismaService } from '#infra/database/prisma/prisma.service.js';
+import { PrismaPaymentMapper } from '#infra/payments/mappers/prisma-payment.mapper.js';
+import { PrismaProfileMapper } from '#infra/users/mappers/prisma-profile.mapper.js';
 
 @Injectable()
 export class PrismaUsersRepository extends UsersRepository {
@@ -33,22 +35,42 @@ export class PrismaUsersRepository extends UsersRepository {
   }
 
   async findByIdWithAllData(id: string): Promise<UserExportData | null> {
-    const row = await this.prisma.user.findUnique({ where: { id } });
+    const row = await this.prisma.user.findUnique({
+      where: { id },
+      include: {
+        profile: {
+          include: {
+            privacySettings: true,
+            notificationSettings: true,
+            payments: { orderBy: { createdAt: 'desc' } },
+            achievements: true,
+          },
+        },
+      },
+    });
 
     if (!row) return null;
 
-    return {
-      user: User.create(
-        {
-          name: row.name,
-          email: row.email,
-          emailVerified: row.emailVerified,
-          createdAt: row.createdAt,
-          updatedAt: row.updatedAt,
-        },
-        new UniqueEntityID(row.id),
-      ),
-    };
+    const user = User.create(
+      {
+        name: row.name,
+        email: row.email,
+        emailVerified: row.emailVerified,
+        createdAt: row.createdAt,
+        updatedAt: row.updatedAt,
+      },
+      new UniqueEntityID(row.id),
+    );
+
+    const profile = row.profile
+      ? PrismaProfileMapper.toDomain(row.profile)
+      : null;
+    const payments =
+      row.profile?.payments.map(PrismaPaymentMapper.toDomain) ?? [];
+    const unlockedAchievements =
+      row.profile?.achievements.map((a) => a.achievementId) ?? [];
+
+    return { user, profile, payments, unlockedAchievements };
   }
 
   async delete(id: string): Promise<void> {
