@@ -19,6 +19,7 @@ import { ErrorResponseDto } from '#common/swagger/error-response.schema.js';
 import { GetProfileByUsernameUseCase } from '#domain/users/use-cases/get-profile-by-username.use-case.js';
 import { PublicProfilePresenter } from '../presenters/public-profile.presenter.js';
 import { UsernameParamDto } from '../schemas/get-profile-by-username.schema.js';
+import { PublicProfileResponseDto } from '../schemas/users-response.schema.js';
 
 @ApiTags('Users')
 @Controller({
@@ -33,7 +34,10 @@ export class GetProfileByUsernameController {
   @Get(':username')
   @AllowAnonymous()
   @ApiOperation({ summary: "Get a user's public profile by username" })
-  @ApiOkResponse({ description: 'Profile returned successfully.' })
+  @ApiOkResponse({
+    description: 'Profile returned successfully.',
+    type: PublicProfileResponseDto,
+  })
   @ApiNotFoundResponse({
     description: 'User not found or profile is private.',
     type: ErrorResponseDto,

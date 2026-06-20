@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBody,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -22,6 +23,7 @@ import {
 import { ResourceNotFoundError } from '#core/errors/errors/resource-not-found.error.js';
 import { UpdatePrivacySettingsUseCase } from '#domain/users/use-cases/update-privacy-settings.use-case.js';
 import { UpdatePrivacySettingsBodyDto } from '../schemas/update-privacy-settings.schema.js';
+import { PrivacySettingsDto } from '../schemas/users-response.schema.js';
 
 @ApiTags('Users')
 @Controller({
@@ -37,7 +39,11 @@ export class UpdatePrivacySettingsController {
   @ApiOperation({
     summary: "Update the authenticated user's privacy settings",
   })
-  @ApiOkResponse({ description: 'Privacy settings updated successfully.' })
+  @ApiBody({ type: UpdatePrivacySettingsBodyDto })
+  @ApiOkResponse({
+    description: 'Privacy settings updated successfully.',
+    type: PrivacySettingsDto,
+  })
   @ApiNotFoundResponse({
     description: 'Profile not found.',
     type: ErrorResponseDto,

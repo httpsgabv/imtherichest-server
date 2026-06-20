@@ -7,6 +7,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBody,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -22,6 +23,7 @@ import {
 import { ResourceNotFoundError } from '#core/errors/errors/resource-not-found.error.js';
 import { UpdateNotificationSettingsUseCase } from '#domain/users/use-cases/update-notification-settings.use-case.js';
 import { UpdateNotificationSettingsBodyDto } from '../schemas/update-notification-settings.schema.js';
+import { NotificationSettingsDto } from '../schemas/users-response.schema.js';
 
 @ApiTags('Users')
 @Controller({
@@ -37,7 +39,11 @@ export class UpdateNotificationSettingsController {
   @ApiOperation({
     summary: "Update the authenticated user's notification settings",
   })
-  @ApiOkResponse({ description: 'Notification settings updated successfully.' })
+  @ApiBody({ type: UpdateNotificationSettingsBodyDto })
+  @ApiOkResponse({
+    description: 'Notification settings updated successfully.',
+    type: NotificationSettingsDto,
+  })
   @ApiNotFoundResponse({
     description: 'Profile not found.',
     type: ErrorResponseDto,

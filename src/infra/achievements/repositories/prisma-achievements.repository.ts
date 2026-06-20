@@ -21,6 +21,12 @@ export class PrismaAchievementsRepository extends AchievementsRepository {
     return rows.map((row) => row.achievementId);
   }
 
+  async deleteByProfileId(profileId: UniqueEntityID): Promise<void> {
+    await this.prisma.userAchievement.deleteMany({
+      where: { profileId: profileId.toString() },
+    });
+  }
+
   async createMany(achievements: UserAchievement[]): Promise<void> {
     if (achievements.length === 0) return;
 

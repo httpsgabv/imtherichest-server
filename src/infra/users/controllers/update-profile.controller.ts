@@ -1,6 +1,7 @@
 import { Body, Controller, NotFoundException, Patch } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBody,
   ApiNotFoundResponse,
   ApiOkResponse,
   ApiOperation,
@@ -17,6 +18,7 @@ import { ResourceNotFoundError } from '#core/errors/errors/resource-not-found.er
 import { UpdateProfileUseCase } from '#domain/users/use-cases/update-profile.use-case.js';
 import { ProfilePresenter } from '../presenters/profile.presenter.js';
 import { UpdateProfileBodyDto } from '../schemas/update-profile.schema.js';
+import { ProfileResponseDto } from '../schemas/users-response.schema.js';
 
 @ApiTags('Users')
 @Controller({
@@ -28,7 +30,11 @@ export class UpdateProfileController {
 
   @Patch('me/profile')
   @ApiOperation({ summary: "Update the authenticated user's profile" })
-  @ApiOkResponse({ description: 'Profile updated successfully.' })
+  @ApiBody({ type: UpdateProfileBodyDto })
+  @ApiOkResponse({
+    description: 'Profile updated successfully.',
+    type: ProfileResponseDto,
+  })
   @ApiNotFoundResponse({
     description: 'Profile not found.',
     type: ErrorResponseDto,

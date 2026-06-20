@@ -21,6 +21,7 @@ import { ErrorResponseDto } from '#common/swagger/error-response.schema.js';
 import { GetUserPaymentsUseCase } from '#domain/payments/use-cases/get-user-payments.use-case.js';
 import { PaymentPresenter } from '../presenters/payment.presenter.js';
 import { GetPaymentsQueryDto } from '../schemas/get-payments.schema.js';
+import { PaymentsResponseDto } from '../schemas/payments-response.schema.js';
 
 @ApiTags('Payments')
 @Controller({
@@ -34,7 +35,10 @@ export class GetUserPaymentsController {
 
   @Get('me/payments')
   @ApiOperation({ summary: "Get the authenticated user's payment history" })
-  @ApiOkResponse({ description: 'Payment list returned.' })
+  @ApiOkResponse({
+    description: 'Payment list returned.',
+    type: PaymentsResponseDto,
+  })
   @ApiNotFoundResponse({
     description: 'Profile not found.',
     type: ErrorResponseDto,

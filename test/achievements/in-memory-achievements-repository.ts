@@ -23,4 +23,8 @@ export class InMemoryAchievementsRepository extends AchievementsRepository {
       if (!exists) this.items.push(achievement);
     }
   }
+
+  async deleteByProfileId(profileId: UniqueEntityID): Promise<void> {
+    this.items = this.items.filter((a) => !a.profileId.equals(profileId));
+  }
 }

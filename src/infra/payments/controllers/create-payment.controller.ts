@@ -8,6 +8,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBody,
   ApiCreatedResponse,
   ApiNotFoundResponse,
   ApiOperation,
@@ -25,6 +26,7 @@ import {
 import { CreatePaymentUseCase } from '#domain/payments/use-cases/create-payment.use-case.js';
 import { PaymentPresenter } from '../presenters/payment.presenter.js';
 import { CreatePaymentBodyDto } from '../schemas/create-payment.schema.js';
+import { CreatePaymentResponseDto } from '../schemas/payments-response.schema.js';
 
 @ApiTags('Payments')
 @Controller({
@@ -37,7 +39,11 @@ export class CreatePaymentController {
   @Post()
   @HttpCode(201)
   @ApiOperation({ summary: 'Record a payment and award points' })
-  @ApiCreatedResponse({ description: 'Payment recorded successfully.' })
+  @ApiBody({ type: CreatePaymentBodyDto })
+  @ApiCreatedResponse({
+    description: 'Payment recorded successfully.',
+    type: CreatePaymentResponseDto,
+  })
   @ApiBadRequestResponse({
     description: 'Invalid amount.',
     type: ValidationErrorResponseDto,

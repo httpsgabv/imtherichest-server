@@ -9,4 +9,5 @@ export abstract class ProfilesRepository {
   abstract savePrivacySettings(profile: Profile): Promise<void>;
   abstract saveNotificationSettings(profile: Profile): Promise<void>;
   abstract savePoints(profile: Profile): Promise<void>;
+  abstract deleteByUserId(userId: UniqueEntityID): Promise<void>;
 }

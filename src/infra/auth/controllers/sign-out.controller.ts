@@ -8,6 +8,7 @@ import {
 import { AllowAnonymous } from '@thallesp/nestjs-better-auth';
 import { SignOutUseCase } from '#domain/auth/use-cases/sign-out.use-case.js';
 import { ErrorResponseDto } from '#common/swagger/error-response.schema.js';
+import { SuccessResponseDto } from '#common/swagger/success-response.schema.js';
 import type { Request, Response } from 'express';
 
 @ApiTags('Auth')
@@ -25,10 +26,7 @@ export class SignOutController {
   @ApiOkResponse({
     description:
       'Sign out successful. Session cookies are cleared via Set-Cookie headers.',
-    schema: {
-      type: 'object',
-      properties: { success: { type: 'boolean', example: true } },
-    },
+    type: SuccessResponseDto,
     headers: {
       'Set-Cookie': {
         description: 'Cleared session cookies.',

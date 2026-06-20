@@ -98,6 +98,12 @@ export class PrismaProfilesRepository extends ProfilesRepository {
     });
   }
 
+  async deleteByUserId(userId: UniqueEntityID): Promise<void> {
+    await this.prisma.profile.delete({
+      where: { userId: userId.toString() },
+    });
+  }
+
   async savePoints(profile: Profile): Promise<void> {
     await this.prisma.profile.update({
       where: { id: profile.id.toString() },

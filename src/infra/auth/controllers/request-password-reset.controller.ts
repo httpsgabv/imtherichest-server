@@ -13,6 +13,7 @@ import {
   ErrorResponseDto,
   ValidationErrorResponseDto,
 } from '#common/swagger/error-response.schema.js';
+import { SuccessResponseDto } from '#common/swagger/success-response.schema.js';
 import { RequestPasswordResetBodyDto } from '../schemas/request-password-reset.schema.js';
 
 @ApiTags('Auth')
@@ -33,10 +34,7 @@ export class RequestPasswordResetController {
   @ApiOkResponse({
     description:
       'Request processed. A reset link will be sent if the email is registered.',
-    schema: {
-      type: 'object',
-      properties: { success: { type: 'boolean', example: true } },
-    },
+    type: SuccessResponseDto,
   })
   @ApiBadRequestResponse({
     description: 'Request body failed validation.',

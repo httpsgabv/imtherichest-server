@@ -1,4 +1,6 @@
 import { Module } from '@nestjs/common';
+import { AchievementsRepository } from '#domain/achievements/repositories/achievements-repository.js';
+import { PaymentsRepository } from '#domain/payments/repositories/payments-repository.js';
 import { LeaderboardRepository } from '#domain/leaderboard/repositories/leaderboard-repository.js';
 import { UsersRepository } from '#domain/users/repositories/users-repository.js';
 import { ProfilesRepository } from '#domain/users/repositories/profiles-repository.js';
@@ -14,7 +16,9 @@ import { GetNotificationSettingsUseCase } from '#domain/users/use-cases/get-noti
 import { UpdateNotificationSettingsUseCase } from '#domain/users/use-cases/update-notification-settings.use-case.js';
 import { AchievementsModule } from '#infra/achievements/achievements.module.js';
 import { DatabaseModule } from '#infra/database/database.module.js';
+import { PrismaAchievementsRepository } from '#infra/achievements/repositories/prisma-achievements.repository.js';
 import { PrismaLeaderboardRepository } from '#infra/leaderboard/repositories/prisma-leaderboard.repository.js';
+import { PrismaPaymentsRepository } from '#infra/payments/repositories/prisma-payments.repository.js';
 import { DeleteUserController } from './controllers/delete-user.controller.js';
 import { ExportUserDataController } from './controllers/export-user-data.controller.js';
 import { GetMyProfileController } from './controllers/get-my-profile.controller.js';
@@ -59,6 +63,14 @@ import { PrismaProfilesRepository } from './repositories/prisma-profiles.reposit
     {
       provide: ProfilesRepository,
       useClass: PrismaProfilesRepository,
+    },
+    {
+      provide: AchievementsRepository,
+      useClass: PrismaAchievementsRepository,
+    },
+    {
+      provide: PaymentsRepository,
+      useClass: PrismaPaymentsRepository,
     },
     {
       provide: LeaderboardRepository,

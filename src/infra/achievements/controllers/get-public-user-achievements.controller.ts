@@ -21,6 +21,7 @@ import { ErrorResponseDto } from '#common/swagger/error-response.schema.js';
 import { GetPublicUserAchievementsUseCase } from '#domain/achievements/use-cases/get-public-user-achievements.use-case.js';
 import { AchievementPresenter } from '../presenters/achievement.presenter.js';
 import { UsernameParamDto } from '../schemas/get-public-achievements.schema.js';
+import { UserAchievementsResponseDto } from '../schemas/achievements-response.schema.js';
 
 @ApiTags('Achievements')
 @Controller({
@@ -35,7 +36,10 @@ export class GetPublicUserAchievementsController {
   @Get(':username/achievements')
   @AllowAnonymous()
   @ApiOperation({ summary: "Get a public user's unlocked achievements" })
-  @ApiOkResponse({ description: 'Achievements returned.' })
+  @ApiOkResponse({
+    description: 'Achievements returned.',
+    type: UserAchievementsResponseDto,
+  })
   @ApiNotFoundResponse({
     description: 'User not found.',
     type: ErrorResponseDto,

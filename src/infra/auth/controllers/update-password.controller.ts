@@ -13,6 +13,7 @@ import {
   ErrorResponseDto,
   ValidationErrorResponseDto,
 } from '#common/swagger/error-response.schema.js';
+import { SuccessResponseDto } from '#common/swagger/success-response.schema.js';
 import { UpdatePasswordBodyDto } from '../schemas/update-password.schema.js';
 import type { Request, Response } from 'express';
 
@@ -30,10 +31,7 @@ export class UpdatePasswordController {
   @ApiBody({ type: UpdatePasswordBodyDto })
   @ApiOkResponse({
     description: 'Password updated successfully.',
-    schema: {
-      type: 'object',
-      properties: { success: { type: 'boolean', example: true } },
-    },
+    type: SuccessResponseDto,
     headers: {
       'Set-Cookie': {
         description: 'New session cookies when revokeOtherSessions is true.',

@@ -17,6 +17,7 @@ import { ErrorResponseDto } from '#common/swagger/error-response.schema.js';
 import { ResourceNotFoundError } from '#core/errors/errors/resource-not-found.error.js';
 import { GetUserRankUseCase } from '#domain/leaderboard/use-cases/get-user-rank.use-case.js';
 import { UsernameParamDto } from '../schemas/get-leaderboard.schema.js';
+import { UserRankResponseDto } from '../schemas/leaderboard-response.schema.js';
 
 @ApiTags('Leaderboard')
 @Controller({
@@ -29,7 +30,10 @@ export class GetUserRankController {
   @Get(':username/rank')
   @AllowAnonymous()
   @ApiOperation({ summary: "Get a user's global rank and rival delta" })
-  @ApiOkResponse({ description: 'Rank returned successfully.' })
+  @ApiOkResponse({
+    description: 'Rank returned successfully.',
+    type: UserRankResponseDto,
+  })
   @ApiNotFoundResponse({
     description: 'User not found.',
     type: ErrorResponseDto,

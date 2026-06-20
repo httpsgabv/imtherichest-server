@@ -16,6 +16,7 @@ import type { UserSession } from '@thallesp/nestjs-better-auth';
 import { ErrorResponseDto } from '#common/swagger/error-response.schema.js';
 import { ResourceNotFoundError } from '#core/errors/errors/resource-not-found.error.js';
 import { GetNotificationSettingsUseCase } from '#domain/users/use-cases/get-notification-settings.use-case.js';
+import { NotificationSettingsDto } from '../schemas/users-response.schema.js';
 
 @ApiTags('Users')
 @Controller({
@@ -33,6 +34,7 @@ export class GetNotificationSettingsController {
   })
   @ApiOkResponse({
     description: 'Notification settings returned successfully.',
+    type: NotificationSettingsDto,
   })
   @ApiNotFoundResponse({
     description: 'Profile not found.',

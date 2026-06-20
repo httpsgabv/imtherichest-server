@@ -16,6 +16,7 @@ import type { UserSession } from '@thallesp/nestjs-better-auth';
 import { ErrorResponseDto } from '#common/swagger/error-response.schema.js';
 import { ResourceNotFoundError } from '#core/errors/errors/resource-not-found.error.js';
 import { GetPrivacySettingsUseCase } from '#domain/users/use-cases/get-privacy-settings.use-case.js';
+import { PrivacySettingsDto } from '../schemas/users-response.schema.js';
 
 @ApiTags('Users')
 @Controller({
@@ -29,7 +30,10 @@ export class GetPrivacySettingsController {
 
   @Get('me/settings/privacy')
   @ApiOperation({ summary: "Get the authenticated user's privacy settings" })
-  @ApiOkResponse({ description: 'Privacy settings returned successfully.' })
+  @ApiOkResponse({
+    description: 'Privacy settings returned successfully.',
+    type: PrivacySettingsDto,
+  })
   @ApiNotFoundResponse({
     description: 'Profile not found.',
     type: ErrorResponseDto,

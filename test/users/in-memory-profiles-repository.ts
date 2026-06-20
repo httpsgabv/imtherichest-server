@@ -44,4 +44,8 @@ export class InMemoryProfilesRepository extends ProfilesRepository {
       this.items[index] = profile;
     }
   }
+
+  async deleteByUserId(userId: UniqueEntityID): Promise<void> {
+    this.items = this.items.filter((p) => !p.userId.equals(userId));
+  }
 }

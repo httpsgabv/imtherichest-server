@@ -46,4 +46,8 @@ export class InMemoryPaymentsRepository extends PaymentsRepository {
       .filter((p) => p.profileId.equals(profileId))
       .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
   }
+
+  async deleteByProfileId(profileId: UniqueEntityID): Promise<void> {
+    this.items = this.items.filter((p) => !p.profileId.equals(profileId));
+  }
 }

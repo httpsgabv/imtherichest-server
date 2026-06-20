@@ -11,6 +11,7 @@ import { UniqueEntityID } from '#core/entities/unique-entity-id.js';
 import { ErrorResponseDto } from '#common/swagger/error-response.schema.js';
 import { GetUserAchievementsUseCase } from '#domain/achievements/use-cases/get-user-achievements.use-case.js';
 import { AchievementPresenter } from '../presenters/achievement.presenter.js';
+import { UserAchievementsResponseDto } from '../schemas/achievements-response.schema.js';
 
 @ApiTags('Achievements')
 @Controller({
@@ -26,7 +27,10 @@ export class GetUserAchievementsController {
   @ApiOperation({
     summary: "Get the authenticated user's unlocked achievements",
   })
-  @ApiOkResponse({ description: 'Achievements returned.' })
+  @ApiOkResponse({
+    description: 'Achievements returned.',
+    type: UserAchievementsResponseDto,
+  })
   @ApiUnauthorizedResponse({
     description: 'Authentication required.',
     type: ErrorResponseDto,

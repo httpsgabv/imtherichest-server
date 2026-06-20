@@ -32,7 +32,16 @@ export class ExportUserDataController {
   @ApiOperation({
     summary: 'Export all data for the authenticated user as JSON',
   })
-  @ApiOkResponse({ description: 'User data exported as a JSON file.' })
+  @ApiOkResponse({
+    description: 'User data exported as a JSON file.',
+    schema: { type: 'string', format: 'binary' },
+    headers: {
+      'Content-Disposition': {
+        description: 'attachment; filename="user-data.json"',
+        schema: { type: 'string' },
+      },
+    },
+  })
   @ApiNotFoundResponse({
     description: 'User not found.',
     type: ErrorResponseDto,

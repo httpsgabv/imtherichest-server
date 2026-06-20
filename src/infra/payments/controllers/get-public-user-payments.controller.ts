@@ -26,6 +26,7 @@ import {
   GetPublicPaymentsQueryDto,
   UsernameParamDto,
 } from '../schemas/get-payments.schema.js';
+import { PaymentsResponseDto } from '../schemas/payments-response.schema.js';
 
 @ApiTags('Payments')
 @Controller({
@@ -40,7 +41,10 @@ export class GetPublicUserPaymentsController {
   @Get(':username/payments')
   @AllowAnonymous()
   @ApiOperation({ summary: "Get a public user's recent payment history" })
-  @ApiOkResponse({ description: 'Payment list returned.' })
+  @ApiOkResponse({
+    description: 'Payment list returned.',
+    type: PaymentsResponseDto,
+  })
   @ApiNotFoundResponse({
     description: 'User not found.',
     type: ErrorResponseDto,

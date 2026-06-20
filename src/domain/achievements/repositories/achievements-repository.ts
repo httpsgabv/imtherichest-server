@@ -6,4 +6,5 @@ export abstract class AchievementsRepository {
     profileId: UniqueEntityID,
   ): Promise<string[]>;
   abstract createMany(achievements: UserAchievement[]): Promise<void>;
+  abstract deleteByProfileId(profileId: UniqueEntityID): Promise<void>;
 }

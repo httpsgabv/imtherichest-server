@@ -53,6 +53,12 @@ export class PrismaPaymentsRepository extends PaymentsRepository {
     };
   }
 
+  async deleteByProfileId(profileId: UniqueEntityID): Promise<void> {
+    await this.prisma.payment.deleteMany({
+      where: { profileId: profileId.toString() },
+    });
+  }
+
   async listByProfileId(profileId: UniqueEntityID): Promise<Payment[]> {
     const rows = await this.prisma.payment.findMany({
       where: { profileId: profileId.toString() },

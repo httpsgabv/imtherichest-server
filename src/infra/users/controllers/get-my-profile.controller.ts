@@ -12,6 +12,7 @@ import { ErrorResponseDto } from '#common/swagger/error-response.schema.js';
 import { ResourceNotFoundError } from '#core/errors/errors/resource-not-found.error.js';
 import { GetMyProfileUseCase } from '#domain/users/use-cases/get-my-profile.use-case.js';
 import { ProfilePresenter } from '../presenters/profile.presenter.js';
+import { ProfileResponseDto } from '../schemas/users-response.schema.js';
 
 @ApiTags('Users')
 @Controller({
@@ -23,7 +24,10 @@ export class GetMyProfileController {
 
   @Get('me')
   @ApiOperation({ summary: 'Get the full profile of the authenticated user' })
-  @ApiOkResponse({ description: 'Profile returned successfully.' })
+  @ApiOkResponse({
+    description: 'Profile returned successfully.',
+    type: ProfileResponseDto,
+  })
   @ApiNotFoundResponse({
     description: 'Profile not found.',
     type: ErrorResponseDto,
