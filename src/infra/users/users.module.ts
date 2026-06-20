@@ -53,6 +53,6 @@ import { PrismaProfilesRepository } from './repositories/prisma-profiles.reposit
       useClass: PrismaProfilesRepository,
     },
   ],
-  exports: [CreateProfileUseCase],
+  exports: [CreateProfileUseCase, ProfilesRepository],
 })
 export class UsersModule {}

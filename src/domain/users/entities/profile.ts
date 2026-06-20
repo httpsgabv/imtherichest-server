@@ -90,6 +90,12 @@ export class Profile extends Entity<ProfileProps> {
     this.props.updatedAt = new Date();
   }
 
+  creditPayment(amountInCents: number, points: number) {
+    this.props.totalPaid += amountInCents;
+    this.props.points += points;
+    this.props.updatedAt = new Date();
+  }
+
   static create(
     props: Optional<
       ProfileProps,

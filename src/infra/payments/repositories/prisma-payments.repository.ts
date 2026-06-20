@@ -1,0 +1,55 @@
+import { Injectable } from '@nestjs/common';
+import { UniqueEntityID } from '#core/entities/unique-entity-id.js';
+import { Payment } from '#domain/payments/entities/payment.js';
+import {
+  PaymentsRepository,
+  type FindManyByProfileIdParams,
+  type FindManyByProfileIdResult,
+} from '#domain/payments/repositories/payments-repository.js';
+import type { Prisma } from '#generated/prisma/client.js';
+import { PrismaService } from '#infra/database/prisma/prisma.service.js';
+import { PrismaPaymentMapper } from '../mappers/prisma-payment.mapper.js';
+
+@Injectable()
+export class PrismaPaymentsRepository extends PaymentsRepository {
+  constructor(private readonly prisma: PrismaService) {
+    super();
+  }
+
+  async create(payment: Payment): Promise<void> {
+    await this.prisma.payment.create({
+      data: PrismaPaymentMapper.toPrisma(payment),
+    });
+  }
+
+  async findManyByProfileId(
+    profileId: UniqueEntityID,
+    params: FindManyByProfileIdParams,
+  ): Promise<FindManyByProfileIdResult> {
+    const { limit, cursor } = params;
+
+    const args: Prisma.PaymentFindManyArgs = {
+      where: { profileId: profileId.toString() },
+      orderBy: { createdAt: 'desc' },
+      take: limit + 1,
+    };
+
+    if (cursor) {
+      args.cursor = { id: cursor };
+      args.skip = 1;
+    }
+
+    const rows = await this.prisma.payment.findMany(args);
+
+    const hasMore = rows.length > limit;
+    const payments = hasMore ? rows.slice(0, limit) : rows;
+    const nextCursor = hasMore
+      ? (payments[payments.length - 1]?.id ?? null)
+      : null;
+
+    return {
+      payments: payments.map(PrismaPaymentMapper.toDomain),
+      nextCursor,
+    };
+  }
+}

@@ -271,6 +271,8 @@ export type ProfileWhereInput = {
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   privacySettings?: Prisma.XOR<Prisma.PrivacySettingsNullableScalarRelationFilter, Prisma.PrivacySettingsWhereInput> | null
   notificationSettings?: Prisma.XOR<Prisma.NotificationSettingsNullableScalarRelationFilter, Prisma.NotificationSettingsWhereInput> | null
+  payments?: Prisma.PaymentListRelationFilter
+  achievements?: Prisma.UserAchievementListRelationFilter
 }
 
 export type ProfileOrderByWithRelationInput = {
@@ -288,6 +290,8 @@ export type ProfileOrderByWithRelationInput = {
   user?: Prisma.UserOrderByWithRelationInput
   privacySettings?: Prisma.PrivacySettingsOrderByWithRelationInput
   notificationSettings?: Prisma.NotificationSettingsOrderByWithRelationInput
+  payments?: Prisma.PaymentOrderByRelationAggregateInput
+  achievements?: Prisma.UserAchievementOrderByRelationAggregateInput
 }
 
 export type ProfileWhereUniqueInput = Prisma.AtLeast<{
@@ -308,6 +312,8 @@ export type ProfileWhereUniqueInput = Prisma.AtLeast<{
   user?: Prisma.XOR<Prisma.UserScalarRelationFilter, Prisma.UserWhereInput>
   privacySettings?: Prisma.XOR<Prisma.PrivacySettingsNullableScalarRelationFilter, Prisma.PrivacySettingsWhereInput> | null
   notificationSettings?: Prisma.XOR<Prisma.NotificationSettingsNullableScalarRelationFilter, Prisma.NotificationSettingsWhereInput> | null
+  payments?: Prisma.PaymentListRelationFilter
+  achievements?: Prisma.UserAchievementListRelationFilter
 }, "id" | "userId" | "username">
 
 export type ProfileOrderByWithAggregationInput = {
@@ -360,6 +366,8 @@ export type ProfileCreateInput = {
   user: Prisma.UserCreateNestedOneWithoutProfileInput
   privacySettings?: Prisma.PrivacySettingsCreateNestedOneWithoutProfileInput
   notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutProfileInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.UserAchievementCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileUncheckedCreateInput = {
@@ -376,6 +384,8 @@ export type ProfileUncheckedCreateInput = {
   updatedAt?: Date | string
   privacySettings?: Prisma.PrivacySettingsUncheckedCreateNestedOneWithoutProfileInput
   notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedOneWithoutProfileInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileUpdateInput = {
@@ -392,6 +402,8 @@ export type ProfileUpdateInput = {
   user?: Prisma.UserUpdateOneRequiredWithoutProfileNestedInput
   privacySettings?: Prisma.PrivacySettingsUpdateOneWithoutProfileNestedInput
   notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutProfileNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.UserAchievementUpdateManyWithoutProfileNestedInput
 }
 
 export type ProfileUncheckedUpdateInput = {
@@ -408,6 +420,8 @@ export type ProfileUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   privacySettings?: Prisma.PrivacySettingsUncheckedUpdateOneWithoutProfileNestedInput
   notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateOneWithoutProfileNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutProfileNestedInput
 }
 
 export type ProfileCreateManyInput = {
@@ -553,6 +567,34 @@ export type IntFieldUpdateOperationsInput = {
   divide?: number
 }
 
+export type ProfileCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutPaymentsInput, Prisma.ProfileUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.ProfileWhereUniqueInput
+}
+
+export type ProfileUpdateOneRequiredWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutPaymentsInput, Prisma.ProfileUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.ProfileUpsertWithoutPaymentsInput
+  connect?: Prisma.ProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutPaymentsInput, Prisma.ProfileUpdateWithoutPaymentsInput>, Prisma.ProfileUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type ProfileCreateNestedOneWithoutAchievementsInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutAchievementsInput, Prisma.ProfileUncheckedCreateWithoutAchievementsInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutAchievementsInput
+  connect?: Prisma.ProfileWhereUniqueInput
+}
+
+export type ProfileUpdateOneRequiredWithoutAchievementsNestedInput = {
+  create?: Prisma.XOR<Prisma.ProfileCreateWithoutAchievementsInput, Prisma.ProfileUncheckedCreateWithoutAchievementsInput>
+  connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutAchievementsInput
+  upsert?: Prisma.ProfileUpsertWithoutAchievementsInput
+  connect?: Prisma.ProfileWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.ProfileUpdateToOneWithWhereWithoutAchievementsInput, Prisma.ProfileUpdateWithoutAchievementsInput>, Prisma.ProfileUncheckedUpdateWithoutAchievementsInput>
+}
+
 export type ProfileCreateNestedOneWithoutPrivacySettingsInput = {
   create?: Prisma.XOR<Prisma.ProfileCreateWithoutPrivacySettingsInput, Prisma.ProfileUncheckedCreateWithoutPrivacySettingsInput>
   connectOrCreate?: Prisma.ProfileCreateOrConnectWithoutPrivacySettingsInput
@@ -594,6 +636,8 @@ export type ProfileCreateWithoutUserInput = {
   updatedAt?: Date | string
   privacySettings?: Prisma.PrivacySettingsCreateNestedOneWithoutProfileInput
   notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutProfileInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.UserAchievementCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileUncheckedCreateWithoutUserInput = {
@@ -609,6 +653,8 @@ export type ProfileUncheckedCreateWithoutUserInput = {
   updatedAt?: Date | string
   privacySettings?: Prisma.PrivacySettingsUncheckedCreateNestedOneWithoutProfileInput
   notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedOneWithoutProfileInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileCreateOrConnectWithoutUserInput = {
@@ -640,6 +686,8 @@ export type ProfileUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   privacySettings?: Prisma.PrivacySettingsUpdateOneWithoutProfileNestedInput
   notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutProfileNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.UserAchievementUpdateManyWithoutProfileNestedInput
 }
 
 export type ProfileUncheckedUpdateWithoutUserInput = {
@@ -655,6 +703,176 @@ export type ProfileUncheckedUpdateWithoutUserInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   privacySettings?: Prisma.PrivacySettingsUncheckedUpdateOneWithoutProfileNestedInput
   notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateOneWithoutProfileNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutProfileNestedInput
+}
+
+export type ProfileCreateWithoutPaymentsInput = {
+  id?: string
+  username: string
+  displayName: string
+  bio?: string
+  country?: string
+  avatarUrl?: string | null
+  points?: number
+  totalPaid?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutProfileInput
+  privacySettings?: Prisma.PrivacySettingsCreateNestedOneWithoutProfileInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutProfileInput
+  achievements?: Prisma.UserAchievementCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileUncheckedCreateWithoutPaymentsInput = {
+  id?: string
+  userId: string
+  username: string
+  displayName: string
+  bio?: string
+  country?: string
+  avatarUrl?: string | null
+  points?: number
+  totalPaid?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  privacySettings?: Prisma.PrivacySettingsUncheckedCreateNestedOneWithoutProfileInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedOneWithoutProfileInput
+  achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.ProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutPaymentsInput, Prisma.ProfileUncheckedCreateWithoutPaymentsInput>
+}
+
+export type ProfileUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.ProfileUpdateWithoutPaymentsInput, Prisma.ProfileUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutPaymentsInput, Prisma.ProfileUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.ProfileWhereInput
+}
+
+export type ProfileUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.ProfileWhereInput
+  data: Prisma.XOR<Prisma.ProfileUpdateWithoutPaymentsInput, Prisma.ProfileUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type ProfileUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  points?: Prisma.IntFieldUpdateOperationsInput | number
+  totalPaid?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutProfileNestedInput
+  privacySettings?: Prisma.PrivacySettingsUpdateOneWithoutProfileNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutProfileNestedInput
+  achievements?: Prisma.UserAchievementUpdateManyWithoutProfileNestedInput
+}
+
+export type ProfileUncheckedUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  points?: Prisma.IntFieldUpdateOperationsInput | number
+  totalPaid?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  privacySettings?: Prisma.PrivacySettingsUncheckedUpdateOneWithoutProfileNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateOneWithoutProfileNestedInput
+  achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutProfileNestedInput
+}
+
+export type ProfileCreateWithoutAchievementsInput = {
+  id?: string
+  username: string
+  displayName: string
+  bio?: string
+  country?: string
+  avatarUrl?: string | null
+  points?: number
+  totalPaid?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  user: Prisma.UserCreateNestedOneWithoutProfileInput
+  privacySettings?: Prisma.PrivacySettingsCreateNestedOneWithoutProfileInput
+  notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutProfileInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileUncheckedCreateWithoutAchievementsInput = {
+  id?: string
+  userId: string
+  username: string
+  displayName: string
+  bio?: string
+  country?: string
+  avatarUrl?: string | null
+  points?: number
+  totalPaid?: number
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  privacySettings?: Prisma.PrivacySettingsUncheckedCreateNestedOneWithoutProfileInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedOneWithoutProfileInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutProfileInput
+}
+
+export type ProfileCreateOrConnectWithoutAchievementsInput = {
+  where: Prisma.ProfileWhereUniqueInput
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutAchievementsInput, Prisma.ProfileUncheckedCreateWithoutAchievementsInput>
+}
+
+export type ProfileUpsertWithoutAchievementsInput = {
+  update: Prisma.XOR<Prisma.ProfileUpdateWithoutAchievementsInput, Prisma.ProfileUncheckedUpdateWithoutAchievementsInput>
+  create: Prisma.XOR<Prisma.ProfileCreateWithoutAchievementsInput, Prisma.ProfileUncheckedCreateWithoutAchievementsInput>
+  where?: Prisma.ProfileWhereInput
+}
+
+export type ProfileUpdateToOneWithWhereWithoutAchievementsInput = {
+  where?: Prisma.ProfileWhereInput
+  data: Prisma.XOR<Prisma.ProfileUpdateWithoutAchievementsInput, Prisma.ProfileUncheckedUpdateWithoutAchievementsInput>
+}
+
+export type ProfileUpdateWithoutAchievementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  points?: Prisma.IntFieldUpdateOperationsInput | number
+  totalPaid?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  user?: Prisma.UserUpdateOneRequiredWithoutProfileNestedInput
+  privacySettings?: Prisma.PrivacySettingsUpdateOneWithoutProfileNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutProfileNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutProfileNestedInput
+}
+
+export type ProfileUncheckedUpdateWithoutAchievementsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  userId?: Prisma.StringFieldUpdateOperationsInput | string
+  username?: Prisma.StringFieldUpdateOperationsInput | string
+  displayName?: Prisma.StringFieldUpdateOperationsInput | string
+  bio?: Prisma.StringFieldUpdateOperationsInput | string
+  country?: Prisma.StringFieldUpdateOperationsInput | string
+  avatarUrl?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  points?: Prisma.IntFieldUpdateOperationsInput | number
+  totalPaid?: Prisma.IntFieldUpdateOperationsInput | number
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  privacySettings?: Prisma.PrivacySettingsUncheckedUpdateOneWithoutProfileNestedInput
+  notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateOneWithoutProfileNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutProfileNestedInput
 }
 
 export type ProfileCreateWithoutPrivacySettingsInput = {
@@ -670,6 +888,8 @@ export type ProfileCreateWithoutPrivacySettingsInput = {
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutProfileInput
   notificationSettings?: Prisma.NotificationSettingsCreateNestedOneWithoutProfileInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.UserAchievementCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileUncheckedCreateWithoutPrivacySettingsInput = {
@@ -685,6 +905,8 @@ export type ProfileUncheckedCreateWithoutPrivacySettingsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   notificationSettings?: Prisma.NotificationSettingsUncheckedCreateNestedOneWithoutProfileInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileCreateOrConnectWithoutPrivacySettingsInput = {
@@ -716,6 +938,8 @@ export type ProfileUpdateWithoutPrivacySettingsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutProfileNestedInput
   notificationSettings?: Prisma.NotificationSettingsUpdateOneWithoutProfileNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.UserAchievementUpdateManyWithoutProfileNestedInput
 }
 
 export type ProfileUncheckedUpdateWithoutPrivacySettingsInput = {
@@ -731,6 +955,8 @@ export type ProfileUncheckedUpdateWithoutPrivacySettingsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notificationSettings?: Prisma.NotificationSettingsUncheckedUpdateOneWithoutProfileNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutProfileNestedInput
 }
 
 export type ProfileCreateWithoutNotificationSettingsInput = {
@@ -746,6 +972,8 @@ export type ProfileCreateWithoutNotificationSettingsInput = {
   updatedAt?: Date | string
   user: Prisma.UserCreateNestedOneWithoutProfileInput
   privacySettings?: Prisma.PrivacySettingsCreateNestedOneWithoutProfileInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.UserAchievementCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileUncheckedCreateWithoutNotificationSettingsInput = {
@@ -761,6 +989,8 @@ export type ProfileUncheckedCreateWithoutNotificationSettingsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   privacySettings?: Prisma.PrivacySettingsUncheckedCreateNestedOneWithoutProfileInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutProfileInput
+  achievements?: Prisma.UserAchievementUncheckedCreateNestedManyWithoutProfileInput
 }
 
 export type ProfileCreateOrConnectWithoutNotificationSettingsInput = {
@@ -792,6 +1022,8 @@ export type ProfileUpdateWithoutNotificationSettingsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   user?: Prisma.UserUpdateOneRequiredWithoutProfileNestedInput
   privacySettings?: Prisma.PrivacySettingsUpdateOneWithoutProfileNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.UserAchievementUpdateManyWithoutProfileNestedInput
 }
 
 export type ProfileUncheckedUpdateWithoutNotificationSettingsInput = {
@@ -807,8 +1039,48 @@ export type ProfileUncheckedUpdateWithoutNotificationSettingsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   privacySettings?: Prisma.PrivacySettingsUncheckedUpdateOneWithoutProfileNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutProfileNestedInput
+  achievements?: Prisma.UserAchievementUncheckedUpdateManyWithoutProfileNestedInput
 }
 
+
+/**
+ * Count Type ProfileCountOutputType
+ */
+
+export type ProfileCountOutputType = {
+  payments: number
+  achievements: number
+}
+
+export type ProfileCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  payments?: boolean | ProfileCountOutputTypeCountPaymentsArgs
+  achievements?: boolean | ProfileCountOutputTypeCountAchievementsArgs
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProfileCountOutputType
+   */
+  select?: Prisma.ProfileCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
+}
+
+/**
+ * ProfileCountOutputType without action
+ */
+export type ProfileCountOutputTypeCountAchievementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.UserAchievementWhereInput
+}
 
 
 export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -826,6 +1098,9 @@ export type ProfileSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   privacySettings?: boolean | Prisma.Profile$privacySettingsArgs<ExtArgs>
   notificationSettings?: boolean | Prisma.Profile$notificationSettingsArgs<ExtArgs>
+  payments?: boolean | Prisma.Profile$paymentsArgs<ExtArgs>
+  achievements?: boolean | Prisma.Profile$achievementsArgs<ExtArgs>
+  _count?: boolean | Prisma.ProfileCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["profile"]>
 
 export type ProfileSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -877,6 +1152,9 @@ export type ProfileInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
   privacySettings?: boolean | Prisma.Profile$privacySettingsArgs<ExtArgs>
   notificationSettings?: boolean | Prisma.Profile$notificationSettingsArgs<ExtArgs>
+  payments?: boolean | Prisma.Profile$paymentsArgs<ExtArgs>
+  achievements?: boolean | Prisma.Profile$achievementsArgs<ExtArgs>
+  _count?: boolean | Prisma.ProfileCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProfileIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   user?: boolean | Prisma.UserDefaultArgs<ExtArgs>
@@ -891,6 +1169,8 @@ export type $ProfilePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     user: Prisma.$UserPayload<ExtArgs>
     privacySettings: Prisma.$PrivacySettingsPayload<ExtArgs> | null
     notificationSettings: Prisma.$NotificationSettingsPayload<ExtArgs> | null
+    payments: Prisma.$PaymentPayload<ExtArgs>[]
+    achievements: Prisma.$UserAchievementPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1301,6 +1581,8 @@ export interface Prisma__ProfileClient<T, Null = never, ExtArgs extends runtime.
   user<T extends Prisma.UserDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.UserDefaultArgs<ExtArgs>>): Prisma.Prisma__UserClient<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   privacySettings<T extends Prisma.Profile$privacySettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$privacySettingsArgs<ExtArgs>>): Prisma.Prisma__PrivacySettingsClient<runtime.Types.Result.GetResult<Prisma.$PrivacySettingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   notificationSettings<T extends Prisma.Profile$notificationSettingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$notificationSettingsArgs<ExtArgs>>): Prisma.Prisma__NotificationSettingsClient<runtime.Types.Result.GetResult<Prisma.$NotificationSettingsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  payments<T extends Prisma.Profile$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  achievements<T extends Prisma.Profile$achievementsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Profile$achievementsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserAchievementPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1777,6 +2059,54 @@ export type Profile$notificationSettingsArgs<ExtArgs extends runtime.Types.Exten
    */
   include?: Prisma.NotificationSettingsInclude<ExtArgs> | null
   where?: Prisma.NotificationSettingsWhereInput
+}
+
+/**
+ * Profile.payments
+ */
+export type Profile$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
+}
+
+/**
+ * Profile.achievements
+ */
+export type Profile$achievementsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the UserAchievement
+   */
+  select?: Prisma.UserAchievementSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the UserAchievement
+   */
+  omit?: Prisma.UserAchievementOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.UserAchievementInclude<ExtArgs> | null
+  where?: Prisma.UserAchievementWhereInput
+  orderBy?: Prisma.UserAchievementOrderByWithRelationInput | Prisma.UserAchievementOrderByWithRelationInput[]
+  cursor?: Prisma.UserAchievementWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.UserAchievementScalarFieldEnum | Prisma.UserAchievementScalarFieldEnum[]
 }
 
 /**

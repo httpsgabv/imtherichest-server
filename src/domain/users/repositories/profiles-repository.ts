@@ -8,4 +8,7 @@ export abstract class ProfilesRepository {
   abstract save(profile: Profile): Promise<void>;
   abstract savePrivacySettings(profile: Profile): Promise<void>;
   abstract saveNotificationSettings(profile: Profile): Promise<void>;
+  abstract savePoints(profile: Profile): Promise<void>;
+  // TODO: move getProfileRank to LeaderboardRepository when leaderboard domain is built
+  abstract getProfileRank(profileId: UniqueEntityID): Promise<number>;
 }

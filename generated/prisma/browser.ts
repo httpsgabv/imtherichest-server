@@ -28,6 +28,16 @@ export type User = Prisma.UserModel
  */
 export type Profile = Prisma.ProfileModel
 /**
+ * Model Payment
+ * 
+ */
+export type Payment = Prisma.PaymentModel
+/**
+ * Model UserAchievement
+ * 
+ */
+export type UserAchievement = Prisma.UserAchievementModel
+/**
  * Model PrivacySettings
  * 
  */

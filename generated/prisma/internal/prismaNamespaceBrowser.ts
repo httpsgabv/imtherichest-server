@@ -53,6 +53,8 @@ export const AnyNull = runtime.AnyNull
 export const ModelName = {
   User: 'User',
   Profile: 'Profile',
+  Payment: 'Payment',
+  UserAchievement: 'UserAchievement',
   PrivacySettings: 'PrivacySettings',
   NotificationSettings: 'NotificationSettings',
   Session: 'Session',
@@ -104,6 +106,27 @@ export const ProfileScalarFieldEnum = {
 } as const
 
 export type ProfileScalarFieldEnum = (typeof ProfileScalarFieldEnum)[keyof typeof ProfileScalarFieldEnum]
+
+
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  profileId: 'profileId',
+  amount: 'amount',
+  points: 'points',
+  createdAt: 'createdAt'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+export const UserAchievementScalarFieldEnum = {
+  id: 'id',
+  profileId: 'profileId',
+  achievementId: 'achievementId',
+  unlockedAt: 'unlockedAt'
+} as const
+
+export type UserAchievementScalarFieldEnum = (typeof UserAchievementScalarFieldEnum)[keyof typeof UserAchievementScalarFieldEnum]
 
 
 export const PrivacySettingsScalarFieldEnum = {

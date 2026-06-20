@@ -10,6 +10,8 @@
  */
 export type * from './models/User.js'
 export type * from './models/Profile.js'
+export type * from './models/Payment.js'
+export type * from './models/UserAchievement.js'
 export type * from './models/PrivacySettings.js'
 export type * from './models/NotificationSettings.js'
 export type * from './models/Session.js'

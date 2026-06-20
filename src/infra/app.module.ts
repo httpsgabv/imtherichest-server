@@ -14,6 +14,7 @@ import { AppThrottlerModule } from '#infra/throttler/app-throttler.module.js';
 import { DatabaseModule } from '#infra/database/database.module.js';
 import { AuthModule } from '#infra/auth/auth.module.js';
 import { UsersModule } from '#infra/users/users.module.js';
+import { PaymentsModule } from '#infra/payments/payments.module.js';
 import { HealthModule } from './health/health.module.js';
 
 @Module({
@@ -28,6 +29,7 @@ import { HealthModule } from './health/health.module.js';
     DatabaseModule,
     AuthModule,
     UsersModule,
+    PaymentsModule,
   ],
   providers: [EnvService],
 })
