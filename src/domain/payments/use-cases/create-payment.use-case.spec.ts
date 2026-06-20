@@ -1,5 +1,7 @@
 import { UniqueEntityID } from '#core/entities/unique-entity-id.js';
 import { ResourceNotFoundError } from '#core/errors/errors/resource-not-found.error.js';
+import { EvaluateAchievementsUseCase } from '#domain/achievements/use-cases/evaluate-achievements.use-case.js';
+import { InMemoryAchievementsRepository } from '#test/achievements/in-memory-achievements-repository.js';
 import { makeProfile } from '#test/factories/make-profile.js';
 import { InMemoryLeaderboardRepository } from '#test/leaderboard/in-memory-leaderboard-repository.js';
 import { InMemoryPaymentsRepository } from '#test/payments/in-memory-payments-repository.js';
@@ -13,6 +15,8 @@ describe('CreatePaymentUseCase', () => {
   let paymentsRepository: InMemoryPaymentsRepository;
   let profilesRepository: InMemoryProfilesRepository;
   let leaderboardRepository: InMemoryLeaderboardRepository;
+  let achievementsRepository: InMemoryAchievementsRepository;
+  let evaluateAchievementsUseCase: EvaluateAchievementsUseCase;
   let sut: CreatePaymentUseCase;
 
   beforeEach(() => {
@@ -21,10 +25,18 @@ describe('CreatePaymentUseCase', () => {
     leaderboardRepository = new InMemoryLeaderboardRepository(
       profilesRepository.items,
     );
+    achievementsRepository = new InMemoryAchievementsRepository();
+    evaluateAchievementsUseCase = new EvaluateAchievementsUseCase(
+      profilesRepository,
+      paymentsRepository,
+      leaderboardRepository,
+      achievementsRepository,
+    );
     sut = new CreatePaymentUseCase(
       paymentsRepository,
       profilesRepository,
       leaderboardRepository,
+      evaluateAchievementsUseCase,
     );
   });
 
@@ -41,7 +53,23 @@ describe('CreatePaymentUseCase', () => {
     expect(result.value.payment.points).toBe(5);
     expect(result.value.profile.points).toBe(5);
     expect(result.value.profile.totalPaid).toBe(500);
-    expect(result.value.unlockedAchievements).toEqual([]);
+    expect(result.value.unlockedAchievements).toContain('first-purchase');
+  });
+
+  it('should evaluate and unlock achievements on payment', async () => {
+    const profile = makeProfile({ userId: USER_ID });
+    profilesRepository.items.push(profile);
+
+    const result = await sut.execute({ userId: USER_ID, amountInCents: 10000 });
+
+    expect(result.isSuccess()).toBe(true);
+    if (!result.isSuccess()) return;
+    // $100 single payment → first-purchase + sheesh; sole profile → rank-1.
+    expect(result.value.unlockedAchievements).toEqual(
+      expect.arrayContaining(['first-purchase', 'sheesh', 'rank-1']),
+    );
+    // register-only achievements are not unlocked by a payment event.
+    expect(result.value.unlockedAchievements).not.toContain('verified-email');
   });
 
   it('should calculate points as Math.round(amount / 100)', async () => {

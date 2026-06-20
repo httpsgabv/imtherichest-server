@@ -52,4 +52,13 @@ export class PrismaPaymentsRepository extends PaymentsRepository {
       nextCursor,
     };
   }
+
+  async listByProfileId(profileId: UniqueEntityID): Promise<Payment[]> {
+    const rows = await this.prisma.payment.findMany({
+      where: { profileId: profileId.toString() },
+      orderBy: { createdAt: 'asc' },
+    });
+
+    return rows.map(PrismaPaymentMapper.toDomain);
+  }
 }

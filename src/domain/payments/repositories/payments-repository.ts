@@ -17,4 +17,6 @@ export abstract class PaymentsRepository {
     profileId: UniqueEntityID,
     params: FindManyByProfileIdParams,
   ): Promise<FindManyByProfileIdResult>;
+  /** Full, unpaginated payment history for a profile (used by achievement evaluation). */
+  abstract listByProfileId(profileId: UniqueEntityID): Promise<Payment[]>;
 }

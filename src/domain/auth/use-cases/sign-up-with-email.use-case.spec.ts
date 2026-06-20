@@ -3,9 +3,13 @@ import { AuthProviderError } from '#domain/auth/errors/auth-provider.error.js';
 import { EmailAlreadyInUserError } from '#domain/auth/errors/email-already-in-use.error.js';
 import { UsernameAlreadyTakenError } from '#domain/users/errors/username-already-taken.error.js';
 import { FakeAuthIdentityProvider } from '#test/auth/fake-auth-identity-provider.js';
+import { InMemoryAchievementsRepository } from '#test/achievements/in-memory-achievements-repository.js';
 import { makeProfile } from '#test/factories/make-profile.js';
 import { makeUser } from '#test/factories/make-user.js';
+import { InMemoryLeaderboardRepository } from '#test/leaderboard/in-memory-leaderboard-repository.js';
+import { InMemoryPaymentsRepository } from '#test/payments/in-memory-payments-repository.js';
 import { InMemoryProfilesRepository } from '#test/users/in-memory-profiles-repository.js';
+import { EvaluateAchievementsUseCase } from '#domain/achievements/use-cases/evaluate-achievements.use-case.js';
 import { CreateProfileUseCase } from '#domain/users/use-cases/create-profile.use-case.js';
 import { SignUpWithEmailUseCase } from './sign-up-with-email.use-case.js';
 
@@ -24,7 +28,16 @@ describe('SignUpWithEmailUseCase', () => {
   beforeEach(() => {
     fakeProvider = new FakeAuthIdentityProvider();
     profilesRepository = new InMemoryProfilesRepository();
-    createProfileUseCase = new CreateProfileUseCase(profilesRepository);
+    const evaluateAchievementsUseCase = new EvaluateAchievementsUseCase(
+      profilesRepository,
+      new InMemoryPaymentsRepository(),
+      new InMemoryLeaderboardRepository(profilesRepository.items),
+      new InMemoryAchievementsRepository(),
+    );
+    createProfileUseCase = new CreateProfileUseCase(
+      profilesRepository,
+      evaluateAchievementsUseCase,
+    );
     sut = new SignUpWithEmailUseCase(fakeProvider, createProfileUseCase);
   });
 

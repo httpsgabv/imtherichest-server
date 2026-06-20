@@ -93,7 +93,7 @@ describe('CreatePayment (E2E)', () => {
     expect(response.body.profile.points).toBeDefined();
     expect(response.body.profile.totalPaid).toBeDefined();
     expect(response.body.profile.rank).toBeDefined();
-    expect(response.body.unlockedAchievements).toEqual([]);
+    expect(response.body.unlockedAchievements).toContain('first-purchase');
   });
 
   it('[POST] /api/v1/payments → points and totalPaid accumulate across payments', async () => {

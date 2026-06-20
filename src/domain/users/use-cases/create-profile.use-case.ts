@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { UniqueEntityID } from '#core/entities/unique-entity-id.js';
 import { failure, success, type Either } from '#core/utils/either.js';
 import type { UseCase } from '#core/use-cases/use-case.js';
+import { EvaluateAchievementsUseCase } from '#domain/achievements/use-cases/evaluate-achievements.use-case.js';
 import { Profile } from '../entities/profile.js';
 import { PrivacySettings } from '../entities/privacy-settings.js';
 import { NotificationSettings } from '../entities/notification-settings.js';
@@ -24,7 +25,10 @@ export class CreateProfileUseCase implements UseCase<
   CreateProfileUseCaseRequest,
   CreateProfileUseCaseResult
 > {
-  constructor(private readonly profilesRepository: ProfilesRepository) {}
+  constructor(
+    private readonly profilesRepository: ProfilesRepository,
+    private readonly evaluateAchievementsUseCase: EvaluateAchievementsUseCase,
+  ) {}
 
   async execute(
     params: CreateProfileUseCaseRequest,
@@ -52,6 +56,11 @@ export class CreateProfileUseCase implements UseCase<
     profile.setNotificationSettings(notificationSettings);
 
     await this.profilesRepository.create(profile);
+
+    await this.evaluateAchievementsUseCase.execute({
+      userId: params.userId,
+      event: 'register',
+    });
 
     return success({ profile });
   }

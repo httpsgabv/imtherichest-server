@@ -40,4 +40,10 @@ export class InMemoryPaymentsRepository extends PaymentsRepository {
 
     return { payments: page, nextCursor };
   }
+
+  async listByProfileId(profileId: UniqueEntityID): Promise<Payment[]> {
+    return this.items
+      .filter((p) => p.profileId.equals(profileId))
+      .sort((a, b) => a.createdAt.getTime() - b.createdAt.getTime());
+  }
 }

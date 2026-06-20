@@ -4,6 +4,7 @@ import { ResourceNotFoundError } from '#core/errors/errors/resource-not-found.er
 import type { UseCase } from '#core/use-cases/use-case.js';
 import type { Either } from '#core/utils/either.js';
 import { failure, success } from '#core/utils/either.js';
+import { EvaluateAchievementsUseCase } from '#domain/achievements/use-cases/evaluate-achievements.use-case.js';
 import { LeaderboardRepository } from '#domain/leaderboard/repositories/leaderboard-repository.js';
 import { ProfilesRepository } from '#domain/users/repositories/profiles-repository.js';
 import { Payment } from '../entities/payment.js';
@@ -33,6 +34,7 @@ export class CreatePaymentUseCase implements UseCase<
     private readonly paymentsRepository: PaymentsRepository,
     private readonly profilesRepository: ProfilesRepository,
     private readonly leaderboardRepository: LeaderboardRepository,
+    private readonly evaluateAchievementsUseCase: EvaluateAchievementsUseCase,
   ) {}
 
   async execute(
@@ -62,8 +64,14 @@ export class CreatePaymentUseCase implements UseCase<
 
     const rank = await this.leaderboardRepository.getProfileRank(profile.id);
 
-    // TODO: call evaluate-achievements use-case when achievements domain is built
-    const unlockedAchievements: string[] = [];
+    const evaluation = await this.evaluateAchievementsUseCase.execute({
+      userId,
+      event: 'payment',
+    });
+
+    const unlockedAchievements = evaluation.isSuccess()
+      ? evaluation.value.newlyUnlocked
+      : [];
 
     return success({
       payment,

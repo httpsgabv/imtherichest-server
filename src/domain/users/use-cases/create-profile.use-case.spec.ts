@@ -2,7 +2,11 @@ import { UniqueEntityID } from '#core/entities/unique-entity-id.js';
 import { UsernameAlreadyTakenError } from '#domain/users/errors/username-already-taken.error.js';
 import { PrivacySettings } from '#domain/users/entities/privacy-settings.js';
 import { NotificationSettings } from '#domain/users/entities/notification-settings.js';
+import { EvaluateAchievementsUseCase } from '#domain/achievements/use-cases/evaluate-achievements.use-case.js';
+import { InMemoryAchievementsRepository } from '#test/achievements/in-memory-achievements-repository.js';
 import { makeProfile } from '#test/factories/make-profile.js';
+import { InMemoryLeaderboardRepository } from '#test/leaderboard/in-memory-leaderboard-repository.js';
+import { InMemoryPaymentsRepository } from '#test/payments/in-memory-payments-repository.js';
 import { InMemoryProfilesRepository } from '#test/users/in-memory-profiles-repository.js';
 import { CreateProfileUseCase } from './create-profile.use-case.js';
 
@@ -15,7 +19,13 @@ describe('CreateProfileUseCase', () => {
 
   beforeEach(() => {
     repository = new InMemoryProfilesRepository();
-    sut = new CreateProfileUseCase(repository);
+    const evaluateAchievementsUseCase = new EvaluateAchievementsUseCase(
+      repository,
+      new InMemoryPaymentsRepository(),
+      new InMemoryLeaderboardRepository(repository.items),
+      new InMemoryAchievementsRepository(),
+    );
+    sut = new CreateProfileUseCase(repository, evaluateAchievementsUseCase);
   });
 
   it('should create a profile with the given fields', async () => {

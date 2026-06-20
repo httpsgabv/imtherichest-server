@@ -10,6 +10,7 @@ import { GetPrivacySettingsUseCase } from '#domain/users/use-cases/get-privacy-s
 import { UpdatePrivacySettingsUseCase } from '#domain/users/use-cases/update-privacy-settings.use-case.js';
 import { GetNotificationSettingsUseCase } from '#domain/users/use-cases/get-notification-settings.use-case.js';
 import { UpdateNotificationSettingsUseCase } from '#domain/users/use-cases/update-notification-settings.use-case.js';
+import { AchievementsModule } from '#infra/achievements/achievements.module.js';
 import { DatabaseModule } from '#infra/database/database.module.js';
 import { DeleteUserController } from './controllers/delete-user.controller.js';
 import { ExportUserDataController } from './controllers/export-user-data.controller.js';
@@ -23,7 +24,7 @@ import { PrismaUsersRepository } from './repositories/prisma-users.repository.js
 import { PrismaProfilesRepository } from './repositories/prisma-profiles.repository.js';
 
 @Module({
-  imports: [DatabaseModule],
+  imports: [DatabaseModule, AchievementsModule],
   controllers: [
     DeleteUserController,
     ExportUserDataController,
