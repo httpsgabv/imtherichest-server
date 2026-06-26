@@ -10,6 +10,7 @@ export class PrismaPaymentMapper {
         profileId: new UniqueEntityID(raw.profileId),
         amount: raw.amount,
         points: raw.points,
+        stripeSessionId: raw.stripeSessionId ?? undefined,
         createdAt: raw.createdAt,
       },
       new UniqueEntityID(raw.id),
@@ -22,6 +23,7 @@ export class PrismaPaymentMapper {
       profileId: payment.profileId.toString(),
       amount: payment.amount,
       points: payment.points,
+      stripeSessionId: payment.stripeSessionId ?? null,
       createdAt: payment.createdAt,
     };
   }

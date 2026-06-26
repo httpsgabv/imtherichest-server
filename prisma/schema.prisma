@@ -63,6 +63,8 @@ model Payment {
   amount Int // in cents
   points Int // Math.round(amount / 100)
 
+  stripeSessionId String? @unique
+
   createdAt DateTime @default(now())
 
   @@index([profileId, createdAt(sort: Desc)])

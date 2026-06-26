@@ -47,6 +47,12 @@ export const envSchema = z.object({
 
   RESEND_API_KEY: z.string().optional(),
   RESEND_FROM_EMAIL: z.string().email().optional(),
+
+  STRIPE_SECRET_KEY: z.string().min(1),
+  STRIPE_WEBHOOK_SECRET: z.string().min(1),
+  STRIPE_SUCCESS_URL: z.string().url(),
+  STRIPE_CANCEL_URL: z.string().url(),
+  STRIPE_PUBLISHABLE_KEY: z.string().min(1),
 });
 
 export type Env = z.infer<typeof envSchema>;

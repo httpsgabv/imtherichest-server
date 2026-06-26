@@ -14,6 +14,7 @@ import { PaymentsRepository } from '../repositories/payments-repository.js';
 export type CreatePaymentUseCaseRequest = {
   userId: UniqueEntityID;
   amountInCents: number;
+  stripeSessionId?: string;
 };
 
 export type CreatePaymentUseCaseResult = Either<
@@ -40,7 +41,7 @@ export class CreatePaymentUseCase implements UseCase<
   async execute(
     params: CreatePaymentUseCaseRequest,
   ): Promise<CreatePaymentUseCaseResult> {
-    const { userId, amountInCents } = params;
+    const { userId, amountInCents, stripeSessionId } = params;
 
     if (!Number.isInteger(amountInCents) || amountInCents < 100) {
       return failure(new InvalidAmountError());
@@ -55,6 +56,7 @@ export class CreatePaymentUseCase implements UseCase<
     const payment = Payment.create({
       profileId: profile.id,
       amount: amountInCents,
+      stripeSessionId,
     });
 
     profile.creditPayment(amountInCents, payment.points);

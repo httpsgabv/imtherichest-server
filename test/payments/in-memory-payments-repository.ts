@@ -13,6 +13,14 @@ export class InMemoryPaymentsRepository extends PaymentsRepository {
     this.items.push(payment);
   }
 
+  async findByStripeSessionId(
+    stripeSessionId: string,
+  ): Promise<Payment | null> {
+    return (
+      this.items.find((p) => p.stripeSessionId === stripeSessionId) ?? null
+    );
+  }
+
   async findManyByProfileId(
     profileId: UniqueEntityID,
     params: FindManyByProfileIdParams,

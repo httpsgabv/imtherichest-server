@@ -22,6 +22,7 @@ import { UsersModule } from '#infra/users/users.module.js';
     BetterAuthModule.forRoot({
       auth,
       bodyParser: {
+        rawBody: true,
         json: {
           limit: '2mb',
         },

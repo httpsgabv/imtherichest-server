@@ -13,6 +13,9 @@ export type FindManyByProfileIdResult = {
 
 export abstract class PaymentsRepository {
   abstract create(payment: Payment): Promise<void>;
+  abstract findByStripeSessionId(
+    stripeSessionId: string,
+  ): Promise<Payment | null>;
   abstract findManyByProfileId(
     profileId: UniqueEntityID,
     params: FindManyByProfileIdParams,

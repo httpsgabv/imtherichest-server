@@ -24,6 +24,11 @@ export class FakeEnvService implements IEnvService {
     LOG_PRISMA: '',
     BETTER_AUTH_SECRET: '',
     BETTER_AUTH_URL: '',
+    STRIPE_SECRET_KEY: 'sk_test_fake',
+    STRIPE_WEBHOOK_SECRET: 'whsec_fake',
+    STRIPE_SUCCESS_URL: 'http://localhost:5173/payment-success',
+    STRIPE_CANCEL_URL: 'http://localhost:5173/pay',
+    STRIPE_PUBLISHABLE_KEY: 'pk_test_fake',
   };
 
   set(key: keyof Env, value: Env[keyof Env]): void {

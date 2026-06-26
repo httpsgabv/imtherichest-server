@@ -6,6 +6,7 @@ type PaymentProps = {
   profileId: UniqueEntityID;
   amount: number; // in cents
   points: number; // Math.round(amount / 100)
+  stripeSessionId?: string;
   createdAt: Date;
 };
 
@@ -20,6 +21,10 @@ export class Payment extends Entity<PaymentProps> {
 
   get points() {
     return this.props.points;
+  }
+
+  get stripeSessionId() {
+    return this.props.stripeSessionId;
   }
 
   get createdAt() {

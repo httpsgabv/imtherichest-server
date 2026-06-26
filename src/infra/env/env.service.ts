@@ -91,6 +91,26 @@ export class EnvService implements IEnvService {
     return this.configService.get('RESEND_FROM_EMAIL');
   }
 
+  get stripeSecretKey(): string {
+    return this.get('STRIPE_SECRET_KEY');
+  }
+
+  get stripeWebhookSecret(): string {
+    return this.get('STRIPE_WEBHOOK_SECRET');
+  }
+
+  get stripeSuccessUrl(): string {
+    return this.get('STRIPE_SUCCESS_URL');
+  }
+
+  get stripeCancelUrl(): string {
+    return this.get('STRIPE_CANCEL_URL');
+  }
+
+  get stripePublishableKey(): string {
+    return this.get('STRIPE_PUBLISHABLE_KEY');
+  }
+
   get<T extends keyof Env>(key: T): Env[T] {
     return this.configService.get(key, { infer: true });
   }

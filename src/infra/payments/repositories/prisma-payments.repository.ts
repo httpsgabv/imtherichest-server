@@ -22,6 +22,18 @@ export class PrismaPaymentsRepository extends PaymentsRepository {
     });
   }
 
+  async findByStripeSessionId(
+    stripeSessionId: string,
+  ): Promise<Payment | null> {
+    const row = await this.prisma.payment.findUnique({
+      where: { stripeSessionId },
+    });
+
+    if (!row) return null;
+
+    return PrismaPaymentMapper.toDomain(row);
+  }
+
   async findManyByProfileId(
     profileId: UniqueEntityID,
     params: FindManyByProfileIdParams,
